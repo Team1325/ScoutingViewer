@@ -8,13 +8,32 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('NewMatchCtrl', ['$scope', '$state', '$rootScope', function($scope, $state, $rootScope) {
+.controller('NewMatchCtrl', ['$scope', '$state', '$rootScope', '$ionicPopup', function($scope, $state, $rootScope, $ionicPopup) {
+
+  $rootScope.match = {scouter: "", quadrant: "", team: "", number: ""};
 
   $scope.auto = function() {
-    $state.go('auto');
+
+    if ($rootScope.match.scouter == "" || $rootScope.match.quadrant == "" || $rootScope.match.team == "" || $rootScope.match.number == "" || $rootScope.match.scouter == null || $rootScope.match.quadrant == null || $rootScope.match.team == null || $rootScope.match.number == null)
+    {
+      var confirmPopup = $ionicPopup.confirm({
+         title: 'Error',
+         template: 'Fill out ALL of the fields to proceed.'
+       });
+       confirmPopup.then(function(res) {
+         if(res) {
+           console.log('You are sure');
+         } else {
+           console.log('You are not sure');
+         }
+       });
+    }
+    else {
+      $state.go('auto');
+    }
   }
 
-  $rootScope.match = {};
+
 
 }])
 

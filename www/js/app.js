@@ -60,19 +60,7 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
                             controller: 'TeleopCtrl'
                         })
 
-                        $stateProvider
-                            .state('list', {
-                                url: '/list',
-                                templateUrl: 'templates/list.html',
-                                controller: 'ListCtrl'
-                            })
 
-                            $stateProvider
-                                .state('search', {
-                                    url: '/search',
-                                    templateUrl: 'templates/search.html',
-                                    controller: 'SearchCtrl'
-                                })
 
     // defaults URL/state to the splash screen (first screen)
 
