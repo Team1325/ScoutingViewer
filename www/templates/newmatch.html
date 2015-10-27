@@ -1,0 +1,40 @@
+<ion-view view-title="New Match">
+  <ion-content class="padding">
+
+    {{uploaded}}
+
+    <label class="item item-input">
+      <span class="input-label">Scouter</span>
+      <input type="text" ng-model="match.scouter">
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Match Number</span>
+      <input type="number" ng-model="match.number">
+    </label>
+
+    <label class="item item-input item-select">
+        <div class="input-label">
+          Quadrant
+        </div>
+        <select ng-model="match.quadrant">
+          <option>Blue Near</option>
+          <option>Blue Mid</option>
+          <option>Blue Far</option>
+          <option>Red Near</option>
+          <option>Red Mid</option>
+          <option>Red Far</option>
+        </select>
+      </label>
+
+    <label class="item item-input">
+      <span class="input-label">Team Number</span>
+      <input type="number" ng-model="match.team">
+    </label>
+
+    <button class="button button-block padding button-outline button-positive" ng-click="auto()">
+      Proceed To Autonomous
+    </button>
+
+  </ion-content>
+</ion-view>

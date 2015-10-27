@@ -1,0 +1,38 @@
+<ion-view title="Autonomous" hide-nav-bar="false">
+
+  <ion-content class="padding">
+
+      <div class="item item-body">
+
+        <div class="item item-divider">
+          Yellow Tote Stack Size (size: {{auto.stackSize}})
+        </div>
+
+        <div class="item range range-dark">
+            <input ng-model = "auto.stackSize" type="range" name="volume" min="0" max="3" value="1">
+        </div>
+
+        <div class="item item-divider">
+          RC Auto Bins (bins: {{auto.bins}})
+        </div>
+
+        <div class="item range range-dark">
+            <input ng-model = "auto.bins" type="range" name="volume" min="0" max="4" value="1">
+        </div>
+
+        <div class="item item-divider">
+          Speed (speed: {{auto.speed}})
+        </div>
+
+        <div class="item range range-dark">
+            <input ng-model = "auto.speed" type="range" name="volume" min="0" max="10" value="1">
+        </div>
+
+
+
+    <button class="button button-block padding button-outline button-positive" ng-click="teleop()">
+      Proceed to Teleop
+    </button>
+
+  </ion-content>
+</ion-view>
