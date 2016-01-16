@@ -40,10 +40,10 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
             })
 
             $stateProvider
-                .state('newmatch', {
-                    url: '/newmatch',
-                    templateUrl: 'templates/newmatch.html',
-                    controller: 'NewMatchCtrl'
+                .state('filter', {
+                    url: '/filter',
+                    templateUrl: 'templates/filter.html',
+                    controller: 'FilterCtrl'
                 })
 
                 $stateProvider
@@ -59,6 +59,13 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
                             templateUrl: 'templates/teleop.html',
                             controller: 'TeleopCtrl'
                         })
+
+                        $stateProvider
+                            .state('search', {
+                                url: '/search',
+                                templateUrl: 'templates/search.html',
+                                controller: 'SearchCtrl'
+                            })
 
 
 

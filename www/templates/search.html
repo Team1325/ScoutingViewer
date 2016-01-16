@@ -6,30 +6,35 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-content class="padding backing-green" style="text-align: center;">
-
-    <h1 class="text"> {{sorry}} </h1>
+  <ion-content style="text-align: center;">
 
     <div class="list">
 
-      <div ng-repeat="organization in results">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="number" placeholder="optional Team #" ng-model="filter.team">
+        </label>
+        <button class="button button-small" ng-click="search()">
+          Search
+        </button>
+      </div>
 
-        <div class="padding">
+    </div>
 
-          <a class="item item-thumbnail-left" ng-click="about(organization)">
-            <img ng-src="{{organization.avatar}}">
-            <h2>{{organization.name}}</h2>
+    <div ng-repeat="match in results">
 
-            <h4 style="color:grey;">{{organization.description}}</h4>
-            <p> {{organization.size}} </p>
-            <h2> <strong> {{organization.location}} </h3>
-
-            <br>
-
-          </a>
-
+      <div class="card">
+        <div class="item item-divider">
+        Team {{match.team}} during Match {{match.number}}
         </div>
-
+        <div class="item item-text-wrap">
+          <div ng-repeat="stack in match.teleop">
+            {{stack.size}} Stack <br>
+          </div>
+        </div>
+        <div class="item item-divider">
+          Speed: {{match.auto.speed}} | Stack Size: {{match.auto.stackSize}} | RC Auto Bins: {{match.auto.bins}}
+        </div>
       </div>
 
     </div>

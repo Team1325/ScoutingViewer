@@ -1,112 +1,175 @@
 angular.module('starter.controllers', [])
 
-.controller('ConfirmCtrl', ['$scope', '$state', function($scope, $state) {
+.controller('SearchCtrl', ['$scope', '$state', '$rootScope', '$http', function($scope, $state, $rootScope, $http) {
 
-  $scope.next = function () {
-    $state.go('newmatch');
+  $scope.matches = [];
+  $scope.filter = {};
+  $scope.results = [];
+
+  $scope.back = function() {
+    $state.go('splash');
+  };
+
+  $scope.search = function() {
+
+    $scope.results = [];
+
+    $http.get("http://scoutingserver.herokuapp.com/api/matches")
+
+      .success(function(data) {
+
+        $scope.matches = data;
+
+        for (i = 0; i <= $scope.matches.length; i++) {
+
+          $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
+          $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
+
+          if ($scope.matches[i].team == parseInt($scope.filter.team)) {
+            $scope.results.push($scope.matches[i]);
+          }
+
+        }
+
+      }
+    );
+
   };
 
 }])
 
-.controller('NewMatchCtrl', ['$scope', '$state', '$rootScope', '$ionicPopup', function($scope, $state, $rootScope, $ionicPopup) {
+.controller('SplashCtrl', ['$scope', '$state', '$http', function($scope, $state, $http) {
 
-  $rootScope.match = {scouter: "", quadrant: "", team: "", number: ""};
+    $scope.matches = [];
+    $scope.filter = {};
+    $scope.refreshed = false;
 
-  $scope.auto = function() {
+    $scope.refresh = function() {
 
-    if ($rootScope.match.scouter == "" || $rootScope.match.quadrant == "" || $rootScope.match.team == "" || $rootScope.match.number == "" || $rootScope.match.scouter == null || $rootScope.match.quadrant == null || $rootScope.match.team == null || $rootScope.match.number == null)
-    {
-      var confirmPopup = $ionicPopup.confirm({
-         title: 'Error',
-         template: 'Fill out ALL of the fields to proceed.'
-       });
-       confirmPopup.then(function(res) {
-         if(res) {
-           console.log('You are sure');
-         } else {
-           console.log('You are not sure');
-         }
-       });
-    }
-    else {
-      $state.go('auto');
-    }
-  }
+      $http.get("http://scoutingserver.herokuapp.com/api/matches")
 
+        .success(function(data) {
 
+          $scope.matches = data;
 
-}])
+          for (i = 0; i <= $scope.matches.length; i++) {
 
-.controller('TeleopCtrl', ['$scope', '$state', '$ionicPopup', '$rootScope', function($scope, $state, $ionicPopup, $rootScope) {
+            $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
+            $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
 
-  $scope.stacks = [];
+          }
 
-  $scope.stacks.push({size: 1, noodle: false, bin: false});
+          $scope.refreshed = true;
 
-  $scope.deleteStack = function(index) {
-    $scope.stacks.splice(index, 1);
-  }
+        }
+      );
 
-  $scope.newStack = function() {
-    $scope.stacks.push({size: 1, noodle: false, bin: false});
-  }
+    };
 
-  $scope.upload = function() {
-    var confirmPopup = $ionicPopup.confirm({
-       title: 'Upload',
-       template: 'Are you sure you want to upload the match? Double check that all your information is accurate.'
-     });
-     confirmPopup.then(function(res) {
-       if(res) {
+    $scope.search = function() {
 
-         /*$http.post('http://scoutingserver.herokuapp.com/api/matches/', {quadrant: $scope.match.quadrant, number: $scope.match.number, scouter: $scope.match.scouter, teleop: JSON.stringify($scope.stacks)})
-             .success(function(data) {
-                 console.log(data);
-             })
-             .error(function(data) {
-                 console.log('Error: ' + data);
-             }
-         );
-*/
-         $scope.stacks = [];
-         $scope.match.number = $scope.match.number + 1;
-         $scope.match.team = null;
-         $rootScope.uploaded = "Previous match was recoreded. Thank you!";
-         $state.go('newmatch');
+      $state.go('search');
 
-         console.log('You are sure');
-       } else {
-         console.log('You are not sure');
-       }
-     });
-   };
+    };
+
+    $scope.filter = function() {
+
+      $state.go('filter');
+
+    };
 
 }])
 
-.controller('AutoCtrl', ['$scope', '$state', '$rootScope', '$ionicPopup', function($scope, $state, $rootScope, $ionicPopup) {
+.controller('FilterCtrl', ['$scope', '$state', '$http', function($scope, $state, $http) {
 
-  $scope.teleop = function() {
-    $state.go('teleop');
-  }
+  $scope.matches = [];
+  $scope.filter = {};
+  $scope.refreshed = false;
+  $scope.results = [];
 
-  $rootScope.auto = {speed: 0, stackSize: 0, bins: 0};
+    $scope.back = function() {
 
-}])
+      $state.go('splash');
 
-.controller('ListCtrl', ['$scope', '$state', '$rootScope', '$ionicPlatform', '$ionicPopup', function($scope, $state, $rootScope, $ionicPlatform,$ionicPopup) {
+    };
 
-}])
+    $scope.refresh = function() {
 
-.controller('SearchCtrl', ['$scope', '$state', '$rootScope', function($scope, $state, $rootScope) {
+      $scope.results = [];
 
-}])
+      if ($scope.filter.type == "RC Auto") {
 
-.controller('SplashCtrl', ['$scope', '$state', function($scope, $state) {
+        $http.get("http://scoutingserver.herokuapp.com/api/matches")
 
-  // goes to Confirm page
+          .success(function(data) {
 
-  $scope.next = function () {
-    $state.go('confirm');
-  };
+            $scope.matches = data;
+
+            for (i = 0; i <= $scope.matches.length; i++) {
+
+              $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
+              $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
+
+              if ($scope.matches[i].auto.speed > 0) {
+                  $scope.results.push($scope.matches[i]);
+              }
+
+            }
+
+          }
+        );
+
+      }
+
+      else if ($scope.filter.type == "Points earned") {
+
+        $http.get("http://scoutingserver.herokuapp.com/api/matches")
+
+          .success(function(data) {
+
+            $scope.matches = data;
+
+            for (i = 0; i <= $scope.matches.length; i++) {
+
+              $scope.matches[i].points = 0;
+
+              for (j = 0; j < $scope.matches[i].teleop.length; j++) {
+
+                $scope.matches[i].points += (parseInt($scope.matches[i].teleop[j].size) * 2);
+
+                if ($scope.matches[i].teleop[j].bin == true) {
+                  $scope.matches[i].points += (4 * $scope.matches[i].teleop[j].size);
+                }
+
+                if ($scope.matches[i].teleop[j].noodle == true) {
+                  $scope.matches[i].points += 6;
+                }
+
+                if ($scope.matches[i].teleop[j].rainbow == true) {
+                  $scope.matches[i].points *= 2;
+                }
+
+              }
+
+            }
+
+          }
+        );
+
+        $scope.matches.sort(function(a, b) {
+
+          if (parseInt(a.points) > parseInt(b.points)) {
+            return 1;
+          }
+          if (parseInt(a.points) < parseInt(b.points)) {
+            return -1;
+          }
+
+          return 0;
+        });
+
+      }
+
+    };
 
 }]);

@@ -1,8 +1,4 @@
 {
-  "name": "FRC 1325 Scouting App",
-  "app_id": "b40cca9a",
-  "watchPatterns": [
-    "www/**/*",
-    "!www/lib/**/*"
-  ]
+  "name": "Scouting App Viewer",
+  "app_id": "7db789d4"
 }
