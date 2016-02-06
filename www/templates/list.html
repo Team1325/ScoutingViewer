@@ -1,36 +1,104 @@
-<ion-view title="My List" hide-nav-bar="false">
+<ion-view title="Team 1325 Scouting App Viewer" hide-nav-bar="false">
 
   <ion-nav-buttons side="left">
-    <button class="button button-clear" ng-click="back()">
-      Back
-    </button>
+    <form ng-submit="newFilter(filterVariable, filterType)" name="filterForm">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Filter..." ng-model="filterVariable" required>
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Filter By:
+        </div>
+        <select ng-model="filterType">
+          <option>Team Number</option>
+          <option>Scouter</option>
+          <option>Match Number</option>
+          <option>Total Score Contribution</option>
+        </select>
+      </label>
+    </form>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="share()">
-      Share
+    <button class="button button-clear button-positive" ng-click="refresh()">
+      Refresh
     </button>
   </ion-nav-buttons>
 
-  <ion-content class="padding backing-purple" style="text-align: center;">
+  <ion-content class="padding"  style="text-align: center;">
 
-      <div ng-repeat="organization in list">
+        <div ng-repeat="match in matches">
 
-        <div class="card">
-          <div class="item item-divider">
-            {{organization.name}}
+          <div class="card">
+
+            <div class="item item-divider">
+            Team {{match.team}} during Match {{match.number}} in Quadrant {{match.quadrant}}
+            </div>
+
+            <div class = "item item-body">
+              Bot Type: {{match.botType}} <br>
+              <br>
+              Total Score: {{match.totalscore}}
+            </div>
+
+            <div class="item item-divider">
+              Autonomous
+            </div>
+
+            <div class="item item-body">
+
+              Defense Attempt: {{match.auto.defenseAttack}} <br>
+              <br>
+              Crossing Speed: {{match.auto.speed}} <br>
+              Defense Type: {{match.auto.defenseType}} <br>
+              <br>
+              Low Balls Scored: {{match.auto.lowBall}} <br>
+              High Balls Scored: {{match.auto.highBall}} <br>
+              <br>
+              Notes: {{match.autonotes}}
+
+            </div>
+
+            <div class="item item-divider">
+            Teleop
+            </div>
+
+            <div class="item item-body">
+
+              Low Balls Scored: {{match.teleop.lowBall}} <br>
+              High Balls Scored: {{match.teleop.highBall}} <br>
+              <br>
+              Tower Attack: {{match.teleop.towerAttack}} <br>
+              <br>
+              Notes: {{match.teleopnotes}}
+
+              <div ng-repeat="attempts in match.defenseAttempts">
+
+                Defense Type: {{attempt.defense}} <br>
+                <br>
+                Defense Result: {{attempt.success}} <br>
+                Damage Dealt to Defense: {{attempt.undamaged}} <br>
+                <br>
+                Cross Time: {{attempt.crossTime}} <br>
+                Return Time: {{attempt.returnTime}} <br>
+                <br>
+
+              </div>
+
+            </div>
+
+            <div class="item item-divider">
+              Scouter: {{match.scouter}}
+            </div>
+
           </div>
-          <div class="item item-text-wrap" ng-click="about(organization)">
-            {{organization.website}} <br> {{organization.email}}
-          </div>
-          <div class="item item-divider">
-            {{organization.location}}
-          </div>
+
         </div>
-
-      </div>
-
-
 
   </ion-content>
 </ion-view>

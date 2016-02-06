@@ -33,39 +33,25 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
         })
 
         $stateProvider
-            .state('confirm', {
-                url: '/confirm',
-                templateUrl: 'templates/confirm.html',
-                controller: 'ConfirmCtrl'
-            })
+        .state('list', {
+            url: '/list',
+            templateUrl: 'templates/list.html',
+            controller: 'ListCtrl'
+        })
 
-            $stateProvider
-                .state('filter', {
-                    url: '/filter',
-                    templateUrl: 'templates/filter.html',
-                    controller: 'FilterCtrl'
-                })
+        $stateProvider
+          .state('filter', {
+            url: '/filter',
+            templateUrl: 'templates/filter.html',
+            controller: 'FilterCtrl'
+          })
 
-                $stateProvider
-                    .state('auto', {
-                        url: '/auto',
-                        templateUrl: 'templates/auto.html',
-                        controller: 'AutoCtrl'
-                    })
-
-                    $stateProvider
-                        .state('teleop', {
-                            url: '/teleop',
-                            templateUrl: 'templates/teleop.html',
-                            controller: 'TeleopCtrl'
-                        })
-
-                        $stateProvider
-                            .state('search', {
-                                url: '/search',
-                                templateUrl: 'templates/search.html',
-                                controller: 'SearchCtrl'
-                            })
+        $stateProvider
+          .state('search', {
+            url: '/search',
+            templateUrl: 'templates/search.html',
+            controller: 'SearchCtrl'
+        })
 
 
 

@@ -1,48 +1,90 @@
 angular.module('starter.controllers', [])
 
-.controller('SearchCtrl', ['$scope', '$state', '$rootScope', '$http', function($scope, $state, $rootScope, $http) {
+.controller('SplashCtrl', ['$scope', '$state', function($scope, $state) {
 
-  $scope.matches = [];
-  $scope.filter = {};
-  $scope.results = [];
-
-  $scope.back = function() {
-    $state.go('splash');
-  };
-
-  $scope.search = function() {
-
-    $scope.results = [];
-
-    $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-      .success(function(data) {
-
-        $scope.matches = data;
-
-        for (i = 0; i <= $scope.matches.length; i++) {
-
-          $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
-          $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
-
-          if ($scope.matches[i].team == parseInt($scope.filter.team)) {
-            $scope.results.push($scope.matches[i]);
-          }
-
-        }
-
-      }
-    );
-
-  };
+  $scope.next = function() {
+    $state.go('list');
+  }
 
 }])
 
-.controller('SplashCtrl', ['$scope', '$state', '$http', function($scope, $state, $http) {
+.controller('ListCtrl', ['$scope', '$state', '$http', '$rootScope', function($scope, $state, $http, $rootScope) {
 
+    $scope.pull = [];
     $scope.matches = [];
-    $scope.filter = {};
     $scope.refreshed = false;
+    $rootScope.filter = "";
+    $rootScope.filterType = "";
+
+    $scope.newFilter = function(filterVar,filterSelection){
+
+      $rootScope.filter = filterVar;
+      $rootScope.filterType = filterSelection;
+      console.log($rootScope.filter);
+      console.log($rootScope.filterType);
+
+      $http.get("http://scoutingserver.herokuapp.com/api/matches")
+
+        .success(function(data) {
+
+          $scope.pull = [];
+          $scope.matches = [];
+
+          $scope.pull = data;
+
+          console.log($scope.pull.length);
+
+          for (i = 0; i < $scope.pull.length; i++) {
+
+            if ($scope.pull[i].teleop)
+            {
+              $scope.pull[i].teleop = JSON.parse($scope.pull[i].teleop);
+            }
+            if ($scope.pull[i].auto)
+            {
+              $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
+            }
+
+            if ($rootScope.filterType == "Team Number")
+            {
+              if ($scope.pull[i].team == $rootScope.filter)
+              {
+                $scope.matches.push($scope.pull[i]);
+              }
+            }
+            else if ($rootScope.filterType == "Scouter")
+            {
+              if ($scope.pull[i].scouter == $rootScope.filter)
+              {
+                $scope.matches.push($scope.pull[i]);
+              }
+            }
+            else if ($rootScope.filterType == "Match Number")
+            {
+              if ($scope.pull[i].number == $rootScope.filter)
+              {
+                $scope.matches.push($scope.pull[i]);
+              }
+            }
+            else if ($rootScope.filterType == "Total Score Contribution")
+            {
+              if (JSON.stringify($scope.pull[i].totalscore) == $rootScope.filter)
+              {
+                $scope.matches.push($scope.pull[i]);
+              }
+            }
+            else {
+              $scope.matches.push($scope.pull[i]);
+            }
+
+          }
+
+          $scope.refreshed = true;
+
+        }
+      );
+
+    }
 
     $scope.refresh = function() {
 
@@ -50,12 +92,23 @@ angular.module('starter.controllers', [])
 
         .success(function(data) {
 
-          $scope.matches = data;
+          $scope.pull = [];
+          $scope.matches = [];
 
-          for (i = 0; i <= $scope.matches.length; i++) {
+          $scope.pull = data;
 
-            $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
-            $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
+          for (i = 0; i < $scope.pull.length; i++) {
+
+            if ($scope.pull[i].teleop)
+            {
+              $scope.pull[i].teleop = JSON.parse($scope.pull[i].teleop);
+            }
+            if ($scope.pull[i].auto)
+            {
+              $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
+            }
+
+            $scope.matches.push($scope.pull[i]);
 
           }
 
@@ -66,110 +119,4 @@ angular.module('starter.controllers', [])
 
     };
 
-    $scope.search = function() {
-
-      $state.go('search');
-
-    };
-
-    $scope.filter = function() {
-
-      $state.go('filter');
-
-    };
-
 }])
-
-.controller('FilterCtrl', ['$scope', '$state', '$http', function($scope, $state, $http) {
-
-  $scope.matches = [];
-  $scope.filter = {};
-  $scope.refreshed = false;
-  $scope.results = [];
-
-    $scope.back = function() {
-
-      $state.go('splash');
-
-    };
-
-    $scope.refresh = function() {
-
-      $scope.results = [];
-
-      if ($scope.filter.type == "RC Auto") {
-
-        $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-          .success(function(data) {
-
-            $scope.matches = data;
-
-            for (i = 0; i <= $scope.matches.length; i++) {
-
-              $scope.matches[i].teleop = JSON.parse($scope.matches[i].teleop);
-              $scope.matches[i].auto = JSON.parse($scope.matches[i].auto);
-
-              if ($scope.matches[i].auto.speed > 0) {
-                  $scope.results.push($scope.matches[i]);
-              }
-
-            }
-
-          }
-        );
-
-      }
-
-      else if ($scope.filter.type == "Points earned") {
-
-        $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-          .success(function(data) {
-
-            $scope.matches = data;
-
-            for (i = 0; i <= $scope.matches.length; i++) {
-
-              $scope.matches[i].points = 0;
-
-              for (j = 0; j < $scope.matches[i].teleop.length; j++) {
-
-                $scope.matches[i].points += (parseInt($scope.matches[i].teleop[j].size) * 2);
-
-                if ($scope.matches[i].teleop[j].bin == true) {
-                  $scope.matches[i].points += (4 * $scope.matches[i].teleop[j].size);
-                }
-
-                if ($scope.matches[i].teleop[j].noodle == true) {
-                  $scope.matches[i].points += 6;
-                }
-
-                if ($scope.matches[i].teleop[j].rainbow == true) {
-                  $scope.matches[i].points *= 2;
-                }
-
-              }
-
-            }
-
-          }
-        );
-
-        $scope.matches.sort(function(a, b) {
-
-          if (parseInt(a.points) > parseInt(b.points)) {
-            return 1;
-          }
-          if (parseInt(a.points) < parseInt(b.points)) {
-            return -1;
-          }
-
-          return 0;
-        });
-
-      }
-
-    };
-
-}]);
