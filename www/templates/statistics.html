@@ -1,0 +1,159 @@
+<ion-view title="Statistics" hide-nav-bar="false">
+
+  <ion-nav-buttons side="left">
+    <button class="button button-clear button-positive" ng-click="list()">
+      List
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button padding button-clear button-positive" ng-click="newTeam(filterTeam)">
+      Refresh
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding" style="text-align: center;">
+
+    <form ng-submit="newTeam(filterTeam)" name="filterForm">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Select Team..." ng-model="filterTeam" required>
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <br>
+
+    <h1>
+      Team: {{teams.team}}
+    </h1>
+
+    <br>
+
+    <label style="font-size:20px">Games Played: <b>{{teams.totalGameCount}}</b></label>
+
+    <br>
+    <br>
+
+    <label style="font-size:20px">Average Amount <b>Low Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoLowBallAverage}}</b></label><br>
+    <label style="font-size:20px">Average Amount <b>High Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoHighBallAverage}}</b></label><br>
+
+    <br>
+
+    <label style="font-size:20px">Average Amount <b>Low Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopLowBallAverage}}</b></label><br>
+    <label style="font-size:20px">Average Amount <b>High Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopHighBallAverage}}</b></label><br>
+
+    <br>
+
+    <label style="font-size:20px">Average <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage}}</b></label><br>
+    <label style="font-size:20px">Average <b>Cycle Time</b> to Score a Boulder: <b>{{teams.teleopCycleTimeAverage}}</b></label><br>
+
+    <label style="font-size:20px">Average <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore}}</b></label><br>
+
+    <br>
+
+    <label style="font-size:20px">Times Tower <b>Failed</b>: <b>{{teams.teleopTowerAttackFailCount}}</b></label><br>
+    <label style="font-size:20px">Times Tower <b>Challenged</b>: <b>{{teams.teleopTowerAttackChallengeCount}}</b></label><br>
+    <label style="font-size:20px">Times Tower <b>Scaled</b>: <b>{{teams.teleopTowerAttackScaleCount}}</b></label><br>
+
+    <br>
+
+    <div class="item item-divider">
+      Defense Attack
+    </div>
+
+    <table style="width:100%; text-align:center">
+      <tr>
+        <td><IMG SRC="img/Low Bar.png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Portcullis (A).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Cheval De Frise (A).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Moat (B).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Ramparts (B).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Drawbridge (C).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Sally Port (C).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Rock Wall (D).png" WIDTH=130 HEIGHT=170></td>
+        <td><IMG SRC="img/Rough Terrain (D).png" WIDTH=130 HEIGHT=170></td>
+      </tr>
+      <tr>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+        <td><h2>Auto<h2></td>
+      </tr>
+      <tr>
+        <td><label>Ach: <b>{{teams.autoLowBarAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoPortcullisAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoChevalDeFriseAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoMoatAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoRampartsAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoDrawbridgeAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoSallyPortAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoRockWallAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.autoRoughTerrainAch}}</b></label></td>
+      </tr>
+      <tr>
+        <td><label>Cross Count: <b>{{teams.autoLowBarCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoPortcullisCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoChevalDeFriseCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoMoatCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoRampartsCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoDrawbridgeCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoSallyPortCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoRockWallCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.autoRoughTerrainCrossCount}}</b></label></td>
+      </tr>
+      <tr>
+        <td><br></td>
+      </tr>
+      <tr>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+        <td><h2>Teleop<h2></td>
+      </tr>
+      <tr>
+        <td><label>Ach: <b>{{teams.teleopLowBarAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopPortcullisAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopChevalDeFriseAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopMoatAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopRampartsAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopDrawbridgeAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopSallyPortAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopRockWallAch}}</b></label></td>
+        <td><label>Ach: <b>{{teams.teleopRoughTerrainAch}}</b></label></td>
+      </tr>
+      <tr>
+        <td><label>Cross Count: <b>{{teams.teleopLowBarCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopPortcullisCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopChevalDeFriseCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopMoatCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopRampartsCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopDrawbridgeCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopSallyPortCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopRockWallCrossCount}}</b></label></td>
+        <td><label>Cross Count: <b>{{teams.teleopRoughTerrainCrossCount}}</b></label></td>
+      </tr>
+    </table>
+
+    <br>
+
+    <br>
+    <br>
+    <br>
+
+
+  </ion-content>
+</ion-view>

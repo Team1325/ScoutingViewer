@@ -26,32 +26,25 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
 
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('splash', {
-            url: '/splash',
-            templateUrl: 'templates/splash.html',
-            controller: 'SplashCtrl'
-        })
+      .state('splash', {
+        url: '/splash',
+        templateUrl: 'templates/splash.html',
+        controller: 'SplashCtrl'
+      })
 
-        $stateProvider
-        .state('list', {
-            url: '/list',
-            templateUrl: 'templates/list.html',
-            controller: 'ListCtrl'
-        })
+    $stateProvider
+      .state('list', {
+        url: '/list',
+        templateUrl: 'templates/list.html',
+        controller: 'ListCtrl'
+      })
 
-        $stateProvider
-          .state('filter', {
-            url: '/filter',
-            templateUrl: 'templates/filter.html',
-            controller: 'FilterCtrl'
-          })
-
-        $stateProvider
-          .state('search', {
-            url: '/search',
-            templateUrl: 'templates/search.html',
-            controller: 'SearchCtrl'
-        })
+    $stateProvider
+      .state('statistics', {
+        url: '/statistics',
+        templateUrl: 'templates/statistics.html',
+        controller: 'StatisticsCtrl'
+      })
 
 
 

@@ -1,20 +1,32 @@
 <ion-view title="Team 1325 Scouting App Viewer" hide-nav-bar="false">
 
   <ion-nav-buttons side="left">
+
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="statistics()">
+      Statistics
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding"  style="text-align: center;">
+
     <form ng-submit="newFilter(filterVariable, filterType)" name="filterForm">
       <div class="item item-input-inset">
         <label class="item-input-wrapper">
-          <input type="text" placeholder="Filter..." ng-model="filterVariable" required>
+          <input type="text" placeholder="Filter..." ng-model="filterVariable">
         </label>
         <button class="button button-small" ng-disabled="filterForm.$invalid">
-          Submit
+          Refresh
         </button>
       </div>
       <label class="item item-input item-select">
-        <div class="input-label">
+        <div class="input-label" style="text-align: left">
           Filter By:
         </div>
         <select ng-model="filterType">
+          <option>View All</option>
           <option>Team Number</option>
           <option>Scouter</option>
           <option>Match Number</option>
@@ -22,43 +34,34 @@
         </select>
       </label>
     </form>
-  </ion-nav-buttons>
-
-  <ion-nav-buttons side="right">
-    <button class="button button-clear button-positive" ng-click="refresh()">
-      Refresh
-    </button>
-  </ion-nav-buttons>
-
-  <ion-content class="padding"  style="text-align: center;">
 
         <div ng-repeat="match in matches">
 
           <div class="card">
 
             <div class="item item-divider">
-            Team {{match.team}} during Match {{match.number}} in Quadrant {{match.quadrant}}
+              Team {{match.team}} during Match {{match.number}} in Quadrant {{match.quadrant}}
+              </body>
             </div>
 
             <div class = "item item-body">
-              Bot Type: {{match.botType}} <br>
-              <br>
-              Total Score: {{match.totalscore}}
+              Robot Type: <b>{{match.botType}}</b>
             </div>
 
             <div class="item item-divider">
-              Autonomous
+              Auto
             </div>
 
             <div class="item item-body">
 
-              Defense Attempt: {{match.auto.defenseAttack}} <br>
+              Low Balls Scored: <b>{{match.auto.lowBall}}</b> <br>
+              High Balls Scored: <b>{{match.auto.highBall}}</b> <br>
               <br>
-              Crossing Speed: {{match.auto.speed}} <br>
-              Defense Type: {{match.auto.defenseType}} <br>
-              <br>
-              Low Balls Scored: {{match.auto.lowBall}} <br>
-              High Balls Scored: {{match.auto.highBall}} <br>
+              First Defense {{match.defenseOne}} -- <b>{{match.auto.definedDefensesAuto.firstDefenseLabel}}</b> <br>
+              Second Defense {{match.defenseTwo}} -- <b>{{match.auto.definedDefensesAuto.secondDefenseLabel}}</b> <br>
+              Third Defense {{match.defenseThree}} -- <b>{{match.auto.definedDefensesAuto.thirdDefenseLabel}}</b> <br>
+              Fourth Defense {{match.defenseFour}} -- <b>{{match.auto.definedDefensesAuto.fourthDefenseLabel}}</b> <br>
+              Fifth Defense {{match.defenseFive}} -- <b>{{match.auto.definedDefensesAuto.fifthDefenseLabel}}</b> <br>
               <br>
               Notes: {{match.autonotes}}
 
@@ -70,26 +73,26 @@
 
             <div class="item item-body">
 
-              Low Balls Scored: {{match.teleop.lowBall}} <br>
-              High Balls Scored: {{match.teleop.highBall}} <br>
+              Low Balls Scored: <b>{{match.teleop.lowBall}}</b> <br>
+              High Balls Scored: <b>{{match.teleop.highBall}}</b> <br>
               <br>
-              Tower Attack: {{match.teleop.towerAttack}} <br>
+              First Defense {{match.defenseOne}} -- <b>{{match.teleop.definedDefensesTeleop.firstDefenseLabel}}</b> <br>
+              Second Defense {{match.defenseTwo}} -- <b>{{match.teleop.definedDefensesTeleop.secondDefenseLabel}}</b> <br>
+              Third Defense {{match.defenseThree}} -- <b>{{match.teleop.definedDefensesTeleop.thirdDefenseLabel}}</b> <br>
+              Fourth Defense {{match.defenseFour}} -- <b>{{match.teleop.definedDefensesTeleop.fourthDefenseLabel}}</b> <br>
+              Fifth Defense {{match.defenseFive}} -- <b>{{match.teleop.definedDefensesTeleop.fifthDefenseLabel}}</b> <br>
+              <br>
+              Total Damage: <b>{{match.teleop.totalDamage}}</b> <br>
+              Cycle Time: <b>{{match.teleop.cycleTime}}</b> <br>
+              <br>
+              Tower Attack: <b>{{match.teleop.towerAttack.towerLabel}}</b> <br>
               <br>
               Notes: {{match.teleopnotes}}
 
-              <div ng-repeat="attempts in match.defenseAttempts">
+            </div>
 
-                Defense Type: {{attempt.defense}} <br>
-                <br>
-                Defense Result: {{attempt.success}} <br>
-                Damage Dealt to Defense: {{attempt.undamaged}} <br>
-                <br>
-                Cross Time: {{attempt.crossTime}} <br>
-                Return Time: {{attempt.returnTime}} <br>
-                <br>
-
-              </div>
-
+            <div class="item item-divider">
+              Total Score: {{match.totalscore}}
             </div>
 
             <div class="item item-divider">
