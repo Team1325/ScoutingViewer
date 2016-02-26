@@ -38,26 +38,26 @@
     <br>
     <br>
 
-    <label style="font-size:20px">Average Amount <b>Low Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoLowBallAverage}}</b></label><br>
-    <label style="font-size:20px">Average Amount <b>High Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoHighBallAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoLowBallAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoHighBallAverage}}</b></label><br>
 
     <br>
 
-    <label style="font-size:20px">Average Amount <b>Low Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopLowBallAverage}}</b></label><br>
-    <label style="font-size:20px">Average Amount <b>High Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopHighBallAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopLowBallAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopHighBallAverage}}</b></label><br>
 
     <br>
 
-    <label style="font-size:20px">Average <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage}}</b></label><br>
-    <label style="font-size:20px">Average <b>Cycle Time</b> to Score a Boulder: <b>{{teams.teleopCycleTimeAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage}}</b></label><br>
+    <label style="font-size:14px">Average <b>Cycle Time</b> to Score: <b>{{teams.teleopCycleTimeAverage | number:2}}</b></label><br>
 
-    <label style="font-size:20px">Average <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore}}</b></label><br>
+    <label style="font-size:14px">Average <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore}}</b></label><br>
 
     <br>
 
-    <label style="font-size:20px">Times Tower <b>Failed</b>: <b>{{teams.teleopTowerAttackFailCount}}</b></label><br>
-    <label style="font-size:20px">Times Tower <b>Challenged</b>: <b>{{teams.teleopTowerAttackChallengeCount}}</b></label><br>
-    <label style="font-size:20px">Times Tower <b>Scaled</b>: <b>{{teams.teleopTowerAttackScaleCount}}</b></label><br>
+    <label style="font-size:14px">Times Enemy Tower <b>Defended</b>: <b>{{teams.teleopTowerAttackFailCount}}</b></label><br>
+    <label style="font-size:14px">Times Enemy Tower <b>Challenged</b>: <b>{{teams.teleopTowerAttackChallengeCount}}</b></label><br>
+    <label style="font-size:14px">Times Enemy Tower <b>Scaled</b>: <b>{{teams.teleopTowerAttackScaleCount}}</b></label><br>
 
     <br>
 
@@ -66,6 +66,7 @@
     </div>
 
     <table style="width:100%; text-align:center">
+      <thead>
       <tr>
         <td><IMG SRC="img/Low Bar.png" WIDTH=130 HEIGHT=170></td>
         <td><IMG SRC="img/Portcullis (A).png" WIDTH=130 HEIGHT=170></td>
@@ -77,6 +78,8 @@
         <td><IMG SRC="img/Rock Wall (D).png" WIDTH=130 HEIGHT=170></td>
         <td><IMG SRC="img/Rough Terrain (D).png" WIDTH=130 HEIGHT=170></td>
       </tr>
+      </thead>
+      <body>
       <tr>
         <td><h2>Auto<h2></td>
         <td><h2>Auto<h2></td>
@@ -100,15 +103,15 @@
         <td><label>Ach: <b>{{teams.autoRoughTerrainAch}}</b></label></td>
       </tr>
       <tr>
-        <td><label>Cross Count: <b>{{teams.autoLowBarCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoPortcullisCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoChevalDeFriseCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoMoatCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoRampartsCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoDrawbridgeCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoSallyPortCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoRockWallCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.autoRoughTerrainCrossCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoLowBarCrossCount}}/{{teams.autoLowBarAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoPortcullisCrossCount}}/{{teams.autoPortcullisAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoChevalDeFriseCrossCount}}/{{teams.autoChevalDeFriseAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoMoatCrossCount}}/{{teams.autoMoatAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoRampartsCrossCount}}/{{teams.autoRampartsAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoDrawbridgeCrossCount}}/{{teams.autoDrawbridgeAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoSallyPortCrossCount}}/{{teams.autoSallyPortAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoRockWallCrossCount}}/{{teams.autoRockWallAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.autoRoughTerrainCrossCount}}/{{teams.autoRoughTerrainAppearCount}}</b></label></td>
       </tr>
       <tr>
         <td><br></td>
@@ -136,16 +139,17 @@
         <td><label>Ach: <b>{{teams.teleopRoughTerrainAch}}</b></label></td>
       </tr>
       <tr>
-        <td><label>Cross Count: <b>{{teams.teleopLowBarCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopPortcullisCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopChevalDeFriseCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopMoatCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopRampartsCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopDrawbridgeCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopSallyPortCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopRockWallCrossCount}}</b></label></td>
-        <td><label>Cross Count: <b>{{teams.teleopRoughTerrainCrossCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopLowBarCrossCount}}/{{teams.teleopLowBarAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopPortcullisCrossCount}}/{{teams.teleopPortcullisAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopChevalDeFriseCrossCount}}/{{teams.teleopChevalDeFriseAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopMoatCrossCount}}/{{teams.teleopMoatAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopRampartsCrossCount}}/{{teams.teleopRampartsAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopDrawbridgeCrossCount}}/{{teams.teleopDrawbridgeAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopSallyPortCrossCount}}/{{teams.teleopSallyPortAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopRockWallCrossCount}}/{{teams.teleopRockWallAppearCount}}</b></label></td>
+        <td><label>Cross: <b>{{teams.teleopRoughTerrainCrossCount}}/{{teams.teleopRoughTerrainAppearCount}}</b></label></td>
       </tr>
+      </body>
     </table>
 
     <br>

@@ -1,4 +1,4 @@
-<ion-view title="Team 1325 Scouting App Viewer" hide-nav-bar="false">
+<ion-view title="List" hide-nav-bar="false">
 
   <ion-nav-buttons side="left">
 
@@ -12,7 +12,7 @@
 
   <ion-content class="padding"  style="text-align: center;">
 
-    <form ng-submit="newFilter(filterVariable, filterType)" name="filterForm">
+    <form ng-submit="newFilter(filterVariable, filterType, orderType)" name="filterForm">
       <div class="item item-input-inset">
         <label class="item-input-wrapper">
           <input type="text" placeholder="Filter..." ng-model="filterVariable">
@@ -30,12 +30,22 @@
           <option>Team Number</option>
           <option>Scouter</option>
           <option>Match Number</option>
-          <option>Total Score Contribution</option>
+          <option>Robot Type</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label" style="text-align: left">
+          Order By:
+        </div>
+        <select ng-model="orderType">
+          <option>Date Uploaded</option>
+          <option>Match Number</option>
+          <option>Score Contribution</option>
         </select>
       </label>
     </form>
 
-        <div ng-repeat="match in matches">
+        <div ng-repeat="match in orderedMatches">
 
           <div class="card">
 
@@ -57,11 +67,11 @@
               Low Balls Scored: <b>{{match.auto.lowBall}}</b> <br>
               High Balls Scored: <b>{{match.auto.highBall}}</b> <br>
               <br>
-              First Defense {{match.defenseOne}} -- <b>{{match.auto.definedDefensesAuto.firstDefenseLabel}}</b> <br>
-              Second Defense {{match.defenseTwo}} -- <b>{{match.auto.definedDefensesAuto.secondDefenseLabel}}</b> <br>
-              Third Defense {{match.defenseThree}} -- <b>{{match.auto.definedDefensesAuto.thirdDefenseLabel}}</b> <br>
-              Fourth Defense {{match.defenseFour}} -- <b>{{match.auto.definedDefensesAuto.fourthDefenseLabel}}</b> <br>
-              Fifth Defense {{match.defenseFive}} -- <b>{{match.auto.definedDefensesAuto.fifthDefenseLabel}}</b> <br>
+              1st Defense {{match.defenseOne}} -- <b>{{match.auto.definedDefensesAuto.firstDefenseLabel}}</b> <br>
+              2nd Defense {{match.defenseTwo}} -- <b>{{match.auto.definedDefensesAuto.secondDefenseLabel}}</b> <br>
+              3rd Defense {{match.defenseThree}} -- <b>{{match.auto.definedDefensesAuto.thirdDefenseLabel}}</b> <br>
+              4th Defense {{match.defenseFour}} -- <b>{{match.auto.definedDefensesAuto.fourthDefenseLabel}}</b> <br>
+              5th Defense {{match.defenseFive}} -- <b>{{match.auto.definedDefensesAuto.fifthDefenseLabel}}</b> <br>
               <br>
               Notes: {{match.autonotes}}
 
@@ -76,11 +86,11 @@
               Low Balls Scored: <b>{{match.teleop.lowBall}}</b> <br>
               High Balls Scored: <b>{{match.teleop.highBall}}</b> <br>
               <br>
-              First Defense {{match.defenseOne}} -- <b>{{match.teleop.definedDefensesTeleop.firstDefenseLabel}}</b> <br>
-              Second Defense {{match.defenseTwo}} -- <b>{{match.teleop.definedDefensesTeleop.secondDefenseLabel}}</b> <br>
-              Third Defense {{match.defenseThree}} -- <b>{{match.teleop.definedDefensesTeleop.thirdDefenseLabel}}</b> <br>
-              Fourth Defense {{match.defenseFour}} -- <b>{{match.teleop.definedDefensesTeleop.fourthDefenseLabel}}</b> <br>
-              Fifth Defense {{match.defenseFive}} -- <b>{{match.teleop.definedDefensesTeleop.fifthDefenseLabel}}</b> <br>
+              1st Defense {{match.defenseOne}} -- <b>{{match.teleop.definedDefensesTeleop.firstDefenseLabel}}</b> <br>
+              2nd Defense {{match.defenseTwo}} -- <b>{{match.teleop.definedDefensesTeleop.secondDefenseLabel}}</b> <br>
+              3rd Defense {{match.defenseThree}} -- <b>{{match.teleop.definedDefensesTeleop.thirdDefenseLabel}}</b> <br>
+              4th Defense {{match.defenseFour}} -- <b>{{match.teleop.definedDefensesTeleop.fourthDefenseLabel}}</b> <br>
+              5th Defense {{match.defenseFive}} -- <b>{{match.teleop.definedDefensesTeleop.fifthDefenseLabel}}</b> <br>
               <br>
               Total Damage: <b>{{match.teleop.totalDamage}}</b> <br>
               Cycle Time: <b>{{match.teleop.cycleTime}}</b> <br>

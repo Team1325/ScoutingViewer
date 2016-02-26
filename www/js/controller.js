@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic'])
 
 .controller('SplashCtrl', ['$scope', '$state', function($scope, $state) {
 
@@ -8,21 +8,29 @@ angular.module('starter.controllers', [])
 
 }])
 
-.controller('ListCtrl', ['$scope', '$state', '$http', '$rootScope', function($scope, $state, $http, $rootScope) {
+.controller('ListCtrl', ['$scope', '$state', '$http', '$rootScope', '$filter', function($scope, $state, $http, $rootScope, $filter) {
 
     $scope.filterType = "View All";
+    $scope.orderType = "Date Uploaded";
     $scope.pull = [];
     $scope.matches = [];
     $scope.refreshed = false;
     $rootScope.filter = "";
     $rootScope.filterType = "";
+    $rootScope.orderType = "";
 
-    $scope.newFilter = function(filterVar,filterSelection){
+    $scope.newFilter = function(filterVar,filterSelection,orderSelection){
 
       $rootScope.filter = filterVar;
       $rootScope.filterType = filterSelection;
-      console.log($rootScope.filter);
-      console.log($rootScope.filterType);
+
+      $rootScope.orderType = orderSelection;
+
+
+      console.log("Filtering By: " + $rootScope.filterType);
+      console.log("Filter: " + $rootScope.filter);
+
+      console.log("Ordering By: " + $rootScope.orderType);
 
       $http.get("http://scoutingserver.herokuapp.com/api/matches")
 
@@ -30,10 +38,11 @@ angular.module('starter.controllers', [])
 
           $scope.pull = [];
           $scope.matches = [];
+          $scope.orderedMatches = [];
 
           $scope.pull = data;
 
-          console.log($scope.pull.length);
+          console.log("Number of Entries: " + $scope.pull.length);
 
           for (i = 0; i < $scope.pull.length; i++) {
 
@@ -67,18 +76,44 @@ angular.module('starter.controllers', [])
                 $scope.matches.push($scope.pull[i]);
               }
             }
-            else if ($rootScope.filterType == "Total Score Contribution")
+            else if ($rootScope.filterType == "Robot Type")
             {
-              if (JSON.stringify($scope.pull[i].totalscore) == $rootScope.filter)
+              if ($scope.pull[i].robotType == $rootScope.filter)
               {
                 $scope.matches.push($scope.pull[i]);
               }
             }
             else {
               $scope.matches.push($scope.pull[i]);
-              console.log(JSON.stringify($scope.matches[i].auto.definedDefensesAuto.firstDefenseLabel));
             }
 
+          }
+
+          if ($rootScope.orderType == "Date Uploaded")
+          {
+            $scope.orderedMatches = $scope.matches;
+          }
+          else if ($rootScope.orderType == "Match Number")
+          {
+            $scope.orderedMatches = $scope.matches;
+            $scope.orderedMatches = $filter('orderBy')($scope.orderedMatches, "number", false);
+
+            console.log("Ordered Matches:")
+            for (asd = 0; asd<$scope.orderedMatches.length; asd++)
+            {
+                console.log(JSON.stringify($scope.orderedMatches[asd].number));
+            }
+          }
+          else if ($rootScope.orderType == "Score Contribution")
+          {
+            $scope.orderedMatches = $scope.matches;
+            $scope.orderedMatches = $filter('orderBy')($scope.orderedMatches, "totalscore", true);
+
+            console.log("Ordered Matches:")
+            for (asd = 0; asd<$scope.orderedMatches.length; asd++)
+            {
+                console.log(JSON.stringify($scope.orderedMatches[asd].totalscore));
+            }
           }
 
           $scope.refreshed = true;
@@ -109,28 +144,28 @@ angular.module('starter.controllers', [])
                           autoLowBallTotal: 0, autoHighBallTotal: 0, // Convert to Averages
                           autoLowBallAverage: 0, autoHighBallAverage: 0,
 
-                          autoLowBarAch: "Failed", autoLowBarCrossCount: 0,
-                          autoPortcullisAch: "Failed", autoPortcullisCrossCount: 0,
-                          autoChevalDeFriseAch: "Failed", autoChevalDeFriseCrossCount: 0,
-                          autoMoatAch: "Failed", autoMoatCrossCount: 0,
-                          autoRampartsAch: "Failed", autoRampartsCrossCount: 0,
-                          autoDrawbridgeAch: "Failed", autoDrawbridgeCrossCount: 0,
-                          autoSallyPortAch: "Failed", autoSallyPortCrossCount: 0,
-                          autoRockWallAch: "Failed", autoRockWallCrossCount: 0,
-                          autoRoughTerrainAch: "Failed", autoRoughTerrainCrossCount: 0,
+                          autoLowBarAch: "Failed", autoLowBarCrossCount: 0, autoLowBarAppearCount: 0,
+                          autoPortcullisAch: "Failed", autoPortcullisCrossCount: 0, autoPortcullisAppearCount: 0,
+                          autoChevalDeFriseAch: "Failed", autoChevalDeFriseCrossCount: 0, autoChevalDeFriseAppearCount: 0,
+                          autoMoatAch: "Failed", autoMoatCrossCount: 0, autoMoatAppearCount: 0,
+                          autoRampartsAch: "Failed", autoRampartsCrossCount: 0, autoRampartsAppearCount: 0,
+                          autoDrawbridgeAch: "Failed", autoDrawbridgeCrossCount: 0, autoDrawbridgeAppearCount: 0,
+                          autoSallyPortAch: "Failed", autoSallyPortCrossCount: 0, autoSallyPortAppearCount: 0,
+                          autoRockWallAch: "Failed", autoRockWallCrossCount: 0, autoRockWallAppearCount: 0,
+                          autoRoughTerrainAch: "Failed", autoRoughTerrainCrossCount: 0, autoRoughTerrainAppearCount: 0,
 
                           teleopLowBallTotal: 0, teleopHighBallTotal: 0, // Convert to Averages
                           teleopLowBallAverage: 0, teleopHighBallAverage: 0,
 
-                          teleopLowBarAch: "Failed", teleopLowBarCrossCount: 0,
-                          teleopPortcullisAch: "Failed", teleopPortcullisCrossCount: 0,
-                          teleopChevalDeFriseAch: "Failed", teleopChevalDeFriseCrossCount: 0,
-                          teleopMoatAch: "Failed", teleopMoatCrossCount: 0,
-                          teleopRampartsAch: "Failed", teleopRampartsCrossCount: 0,
-                          teleopDrawbridgeAch: "Failed", teleopDrawbridgeCrossCount: 0,
-                          teleopSallyPortAch: "Failed", teleopSallyPortCrossCount: 0,
-                          teleopRockWallAch: "Failed", teleopRockWallCrossCount: 0,
-                          teleopRoughTerrainAch: "Failed", teleopRoughTerrainCrossCount: 0,
+                          teleopLowBarAch: "Failed", teleopLowBarCrossCount: 0, teleopLowBarAppearCount: 0,
+                          teleopPortcullisAch: "Failed", teleopPortcullisCrossCount: 0, teleopPortcullisAppearCount: 0,
+                          teleopChevalDeFriseAch: "Failed", teleopChevalDeFriseCrossCount: 0, teleopChevalDeFriseAppearCount: 0,
+                          teleopMoatAch: "Failed", teleopMoatCrossCount: 0, teleopMoatAppearCount: 0,
+                          teleopRampartsAch: "Failed", teleopRampartsCrossCount: 0, teleopRampartsAppearCount: 0,
+                          teleopDrawbridgeAch: "Failed", teleopDrawbridgeCrossCount: 0, teleopDrawbridgeAppearCount: 0,
+                          teleopSallyPortAch: "Failed", teleopSallyPortCrossCount: 0, teleopSallyPortAppearCount: 0,
+                          teleopRockWallAch: "Failed", teleopRockWallCrossCount: 0, teleopRockWallAppearCount: 0,
+                          teleopRoughTerrainAch: "Failed", teleopRoughTerrainCrossCount: 0, teleopRoughTerrainAppearCount: 0,
 
                           teleopTotalDamageTotal: 0, // Convert to Averages
                           teleopTotalDamageAverage: 0,
@@ -168,7 +203,7 @@ angular.module('starter.controllers', [])
           $rootScope.filter = filterTeam;
         }
 
-        console.log($scope.pull.length);
+        console.log("Number of Available Entries: " + $scope.pull.length);
 
         for (i = 0; i < $scope.pull.length; i++) {
 
@@ -224,6 +259,16 @@ angular.module('starter.controllers', [])
 
               }
 
+              if (theDefense == "Low Bar") {$rootScope.teams.autoLowBarAppearCount++;}
+              if (theDefense == "Portcullis (A)") {$rootScope.teams.autoPortcullisAppearCount++;}
+              if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.autoChevalDeFriseAppearCount++;}
+              if (theDefense == "Moat (B)") {$rootScope.teams.autoMoatAppearCount++;}
+              if (theDefense == "Ramparts (B)") {$rootScope.teams.autoRampartsAppearCount++;}
+              if (theDefense == "Drawbridge (C)") {$rootScope.teams.autoDrawbridgeAppearCount++;}
+              if (theDefense == "Sally Port (C)") {$rootScope.teams.autoSallyPortAppearCount++;}
+              if (theDefense == "Rock Wall (D)") {$rootScope.teams.autoRockWallAppearCount++;}
+              if (theDefense == "Rough Terrain (D)") {$rootScope.teams.autoRoughTerrainAppearCount++;}
+
             }
 
             for (time = 1; time<=5; time++)
@@ -251,6 +296,16 @@ angular.module('starter.controllers', [])
 
               }
 
+              if (theDefense == "Low Bar") {$rootScope.teams.teleopLowBarAppearCount++;}
+              if (theDefense == "Portcullis (A)") {$rootScope.teams.teleopPortcullisAppearCount++;}
+              if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.teleopChevalDeFriseAppearCount++;}
+              if (theDefense == "Moat (B)") {$rootScope.teams.teleopMoatAppearCount++;}
+              if (theDefense == "Ramparts (B)") {$rootScope.teams.teleopRampartsAppearCount++;}
+              if (theDefense == "Drawbridge (C)") {$rootScope.teams.teleopDrawbridgeAppearCount++;}
+              if (theDefense == "Sally Port (C)") {$rootScope.teams.teleopSallyPortAppearCount++;}
+              if (theDefense == "Rock Wall (D)") {$rootScope.teams.teleopRockWallAppearCount++;}
+              if (theDefense == "Rough Terrain (D)") {$rootScope.teams.teleopRoughTerrainAppearCount++;}
+
             }
 
             $rootScope.teams.team = $rootScope.filter,
@@ -263,7 +318,7 @@ angular.module('starter.controllers', [])
             $rootScope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
             $rootScope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
 
-            if ($scope.pull[i].teleop.towerAttack.towerLabel == "Failed")
+            if ($scope.pull[i].teleop.towerAttack.towerLabel == "Defended")
             {
               $rootScope.teams.teleopTowerAttackFailCount++;
             }
@@ -308,11 +363,11 @@ angular.module('starter.controllers', [])
         $rootScope.teams.teleopHighBallAverage = $rootScope.teams.teleopHighBallTotal/$rootScope.teams.totalGameCount;
 
         $rootScope.teams.teleopTotalDamageAverage = $rootScope.teams.teleopTotalDamageTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopCycleTimeAverage = $rootScope.teams.teleopCycleTimeTotal/$rootScope.teams.totalGameCount;
+        $rootScope.teams.teleopCycleTimeAverage = $rootScope.teams.teleopCycleTimeTotal/$rootScope.teams.totalGameCount/100;
 
         $rootScope.teams.averageTotalScore = $rootScope.teams.totalTotalScore/$rootScope.teams.totalGameCount;
 
-        console.log("success!")
+        console.log("Success!")
 
       });
   }
