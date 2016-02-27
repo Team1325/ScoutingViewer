@@ -1,0 +1,181 @@
+<ion-view title="Rankings" hide-nav-bar="false">
+
+  <ion-nav-buttons side="left">
+
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive" ng-click="list()">
+      List
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding" style="text-align: center;">
+
+    <form ng-submit="rankList(filterStat, reverseOrder)" name="rankForm">
+    <div>
+      <label class="item item-input item-select">
+        <div class="input-label" style="text-align: left">
+          Rank By:
+        </div>
+        <select ng-model="filterStat">
+          <option>Avg Score Contribution</option>
+          <option>Avg Cycle Time</option>
+        </select>
+      </label>
+      <ion-toggle ng-model="reverseOrder" toggle-class="toggle-calm" style="text-align: left">Reverse:</ion-toggle>
+      <button class="button button-block button-positive button-outline" ng-disabled="rankForm.$invalid">
+        Refresh
+      </button>
+    </div>
+    </form>
+
+    <ion-list>
+      <div ng-repeat="teams in allStats">
+        <ion-item class="item-stable"
+                  ng-click="toggleGroup(teams)"
+                  ng-class="{active: isGroupShown(teams)}">
+          <i class="icon" ng-class="isGroupShown(teams) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{teams.team}} - {{filterDisplayStat}} {{teams.filterVarStat | number: 2}}
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-show="isGroupShown(teams)">
+
+                  <br>
+
+                  <h1>
+                    Team: {{teams.team}}
+                  </h1>
+
+                  <br>
+
+                  <label style="font-size:20px">Games Played: <b>{{teams.totalGameCount}}</b></label> <br>
+
+                  <br>
+
+                  <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoLowBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoHighBallAverage | number:2}}</b></label><br>
+
+                  <br>
+
+                  <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopLowBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopHighBallAverage | number:2}}</b></label><br>
+
+                  <br>
+
+                  <label style="font-size:14px">Average <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Average <b>Cycle Time</b> to Score: <b>{{teams.teleopCycleTimeAverage | number:2}}</b></label><br>
+
+                  <label style="font-size:14px">Average <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore| number:2}}</b></label><br>
+
+                  <br>
+
+                  <label style="font-size:14px">Times Enemy Tower <b>Defended</b>: <b>{{teams.teleopTowerAttackFailCount}}</b></label><br>
+                  <label style="font-size:14px">Times Enemy Tower <b>Challenged</b>: <b>{{teams.teleopTowerAttackChallengeCount}}</b></label><br>
+                  <label style="font-size:14px">Times Enemy Tower <b>Scaled</b>: <b>{{teams.teleopTowerAttackScaleCount}}</b></label><br>
+
+                  <br>
+
+                  <div class="item item-divider">
+                    Defense Attack
+                  </div>
+
+                  <ion-scroll direction="x" style="width:100%; height:100%">
+                  <table style="width:100%; text-align:center">
+                    <thead>
+                    <tr>
+                      <td><IMG SRC="img/Low Bar.png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Portcullis (A).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Cheval De Frise (A).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Moat (B).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Ramparts (B).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Drawbridge (C).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Sally Port (C).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Rock Wall (D).png" WIDTH=130 HEIGHT=170></td>
+                      <td><IMG SRC="img/Rough Terrain (D).png" WIDTH=130 HEIGHT=170></td>
+                    </tr>
+                    </thead>
+                    <body>
+                    <tr>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                      <td><h2>Auto<h2></td>
+                    </tr>
+                    <tr>
+                      <td><label>Ach: <b>{{teams.autoLowBarAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoPortcullisAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoChevalDeFriseAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoMoatAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoRampartsAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoDrawbridgeAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoSallyPortAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoRockWallAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.autoRoughTerrainAch}}</b></label></td>
+                    </tr>
+                    <tr>
+                      <td><label>Cross: <b>{{teams.autoLowBarCrossCount}}/{{teams.autoLowBarAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoPortcullisCrossCount}}/{{teams.autoPortcullisAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoChevalDeFriseCrossCount}}/{{teams.autoChevalDeFriseAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoMoatCrossCount}}/{{teams.autoMoatAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoRampartsCrossCount}}/{{teams.autoRampartsAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoDrawbridgeCrossCount}}/{{teams.autoDrawbridgeAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoSallyPortCrossCount}}/{{teams.autoSallyPortAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoRockWallCrossCount}}/{{teams.autoRockWallAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.autoRoughTerrainCrossCount}}/{{teams.autoRoughTerrainAppearCount}}</b></label></td>
+                    </tr>
+                    <tr>
+                      <td><br></td>
+                    </tr>
+                    <tr>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                      <td><h2>Teleop<h2></td>
+                    </tr>
+                    <tr>
+                      <td><label>Ach: <b>{{teams.teleopLowBarAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopPortcullisAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopChevalDeFriseAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopMoatAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopRampartsAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopDrawbridgeAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopSallyPortAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopRockWallAch}}</b></label></td>
+                      <td><label>Ach: <b>{{teams.teleopRoughTerrainAch}}</b></label></td>
+                    </tr>
+                    <tr>
+                      <td><label>Cross: <b>{{teams.teleopLowBarCrossCount}}/{{teams.teleopLowBarAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopPortcullisCrossCount}}/{{teams.teleopPortcullisAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopChevalDeFriseCrossCount}}/{{teams.teleopChevalDeFriseAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopMoatCrossCount}}/{{teams.teleopMoatAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopRampartsCrossCount}}/{{teams.teleopRampartsAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopDrawbridgeCrossCount}}/{{teams.teleopDrawbridgeAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopSallyPortCrossCount}}/{{teams.teleopSallyPortAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopRockWallCrossCount}}/{{teams.teleopRockWallAppearCount}}</b></label></td>
+                      <td><label>Cross: <b>{{teams.teleopRoughTerrainCrossCount}}/{{teams.teleopRoughTerrainAppearCount}}</b></label></td>
+                    </tr>
+                    </body>
+                  </table>
+                  <br>
+                  <br>
+                  </ion-scroll>
+
+        </ion-item>
+      </div>
+    </ion-list>
+
+
+  </ion-content>
+</ion-view>

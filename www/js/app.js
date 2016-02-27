@@ -46,6 +46,13 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
         controller: 'StatisticsCtrl'
       })
 
+    $stateProvider
+      .state('rankings', {
+        url: '/rankings',
+        templateUrl: 'templates/rankings.html',
+        controller: 'RankingsCtrl'
+      })
+
 
 
     // defaults URL/state to the splash screen (first screen)
