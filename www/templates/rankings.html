@@ -21,6 +21,7 @@
         <select ng-model="filterStat">
           <option>Avg Score Contribution</option>
           <option>Avg Cycle Time</option>
+          <option>Overall Accuracy</option>
         </select>
       </label>
       <ion-toggle ng-model="reverseOrder" toggle-class="toggle-calm" style="text-align: left">Reverse:</ion-toggle>
@@ -32,12 +33,18 @@
 
     <ion-list>
       <div ng-repeat="teams in allStats">
-        <ion-item class="item-stable"
+        <ion-item class="item-stable" style="-webkit-transition: opacity .1s;
+                                              transition: opacity .1s;
+                                              background: none;
+                                              box-shadow: none;
+                                              border-color: #0000FF;
+                                              background-color: #CCCCFF;
+                                              color: #000000;"
                   ng-click="toggleGroup(teams)"
                   ng-class="{active: isGroupShown(teams)}">
           <i class="icon" ng-class="isGroupShown(teams) ? 'ion-minus' : 'ion-plus'"></i>
             &nbsp;
-            {{teams.team}} - {{filterDisplayStat}} {{teams.filterVarStat | number: 2}}
+            {{teams.team}} - {{filterDisplayStat}} {{teams.filterVarStat | number: 2}} {{filterDisplayUnit}}
         </ion-item>
         <ion-item class="item-accordion"
                   ng-show="isGroupShown(teams)">
@@ -50,30 +57,38 @@
 
                   <br>
 
-                  <label style="font-size:20px">Games Played: <b>{{teams.totalGameCount}}</b></label> <br>
+                  <label style="font-size:20px">Games Played: <b>{{teams.totalGameCount}}</b></label>
+
+                  <br>
+                  <br>
+
+                  <label style="font-size:14px">Avg <b>Low Boulders</b> Scored <b>Auto</b>: <b>{{teams.autoLowBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>High Boulders</b> Scored <b>Auto</b>: <b>{{teams.autoHighBallAverage | number:2}}</b></label><br>
 
                   <br>
 
-                  <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoLowBallAverage | number:2}}</b></label><br>
-                  <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Auto</b>: <b>{{teams.autoHighBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>Low Boulders</b> Scored <b>Teleop</b>: <b>{{teams.teleopLowBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>High Boulders</b> Scored <b>Teleop</b>: <b>{{teams.teleopHighBallAverage | number:2}}</b></label><br>
 
                   <br>
 
-                  <label style="font-size:14px">Average <b>Low Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopLowBallAverage | number:2}}</b></label><br>
-                  <label style="font-size:14px">Average <b>High Boulders</b> Scored in <b>Teleop</b>: <b>{{teams.teleopHighBallAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage | number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>Cycle Time</b> to Score: <b>{{teams.teleopCycleTimeAverage | number:2}}</b></label><br>
 
-                  <br>
-
-                  <label style="font-size:14px">Average <b>Total Damage</b> to Outer Works: <b>{{teams.teleopTotalDamageAverage | number:2}}</b></label><br>
-                  <label style="font-size:14px">Average <b>Cycle Time</b> to Score: <b>{{teams.teleopCycleTimeAverage | number:2}}</b></label><br>
-
-                  <label style="font-size:14px">Average <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore| number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>Total Score</b> Contribution: <b>{{teams.averageTotalScore| number:2}}</b></label><br>
+                  <label style="font-size:14px">Avg <b>Accuracy</b> in Shooting: <b>{{teams.overallAccuracy| number:2}}%</b></label><br>
 
                   <br>
 
                   <label style="font-size:14px">Times Enemy Tower <b>Defended</b>: <b>{{teams.teleopTowerAttackFailCount}}</b></label><br>
                   <label style="font-size:14px">Times Enemy Tower <b>Challenged</b>: <b>{{teams.teleopTowerAttackChallengeCount}}</b></label><br>
                   <label style="font-size:14px">Times Enemy Tower <b>Scaled</b>: <b>{{teams.teleopTowerAttackScaleCount}}</b></label><br>
+
+                  <br>
+
+                  <label style="font-size:14px">Times Start Position in <b>Courtyard</b>: <b>{{teams.timesStartCourtyard}}</b></label><br>
+                  <label style="font-size:14px">Times Start Position in <b>Auto Zone</b>: <b>{{teams.timesStartAutoZone}}</b></label><br>
+                  <label style="font-size:14px">Times Start Position in <b>Spy Start</b>: <b>{{teams.timesStartSpyStart}}</b></label><br>
 
                   <br>
 
@@ -171,6 +186,8 @@
                   <br>
                   <br>
                   </ion-scroll>
+
+                  <br>
 
         </ion-item>
       </div>
