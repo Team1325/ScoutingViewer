@@ -158,6 +158,7 @@ angular.module('starter.controllers', ['ionic'])
 .controller('StatisticsCtrl', ['$scope', '$state', '$http', '$rootScope', function($scope, $state, $http, $rootScope) {
 
   $scope.refreshed = false;
+  $scope.notAvailable = " ";
 
   $scope.list = function() {
     $state.go('list');
@@ -165,7 +166,9 @@ angular.module('starter.controllers', ['ionic'])
 
   $scope.newTeam = function(filterTeam) {
 
-    $rootScope.teams =    {team: 0,
+    $scope.notAvailable = " ";
+
+    $scope.teams =    {team: 0,
                           autoLowBallTotal: 0, autoHighBallTotal: 0, // Convert to Averages
                           autoLowBallAverage: 0, autoHighBallAverage: 0,
                           autoLowShotTotal: 0, autoHighShotTotal: 0,
@@ -231,6 +234,8 @@ angular.module('starter.controllers', ['ionic'])
 
         $scope.pull = data;
 
+
+
         if (filterTeam)
         {
           $rootScope.filter = filterTeam;
@@ -266,53 +271,53 @@ angular.module('starter.controllers', ['ionic'])
 
                           if (theLabel == "Crossed") {
 
-                            if (theDefense == "Low Bar") {$rootScope.teams.autoLowBarAch="Crossed";$rootScope.teams.autoLowBarCrossCount++;}
-                            if (theDefense == "Portcullis (A)") {$rootScope.teams.autoPortcullisAch="Crossed";$rootScope.teams.autoPortcullisCrossCount++;}
-                            if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.autoChevalDeFriseAch="Crossed";$rootScope.teams.autoChevalDeFriseCrossCount++;}
-                            if (theDefense == "Moat (B)") {$rootScope.teams.autoMoatAch="Crossed";$rootScope.teams.autoMoatCrossCount++;}
-                            if (theDefense == "Ramparts (B)") {$rootScope.teams.autoRampartsAch="Crossed";$rootScope.teams.autoRampartsCrossCount++;}
-                            if (theDefense == "Drawbridge (C)") {$rootScope.teams.autoDrawbridgeAch="Crossed";$rootScope.teams.autoDrawbridgeCrossCount++;}
-                            if (theDefense == "Sally Port (C)") {$rootScope.teams.autoSallyPortAch="Crossed";$rootScope.teams.autoSallyPortCrossCount++;}
-                            if (theDefense == "Rock Wall (D)") {$rootScope.teams.autoRockWallAch="Crossed";$rootScope.teams.autoRockWallCrossCount++;}
-                            if (theDefense == "Rough Terrain (D)") {$rootScope.teams.autoRoughTerrainAch="Crossed";$rootScope.teams.autoRoughTerrainCrossCount++;}
+                            if (theDefense == "Low Bar") {$scope.teams.autoLowBarAch="Crossed";$scope.teams.autoLowBarCrossCount++;}
+                            if (theDefense == "Portcullis (A)") {$scope.teams.autoPortcullisAch="Crossed";$scope.teams.autoPortcullisCrossCount++;}
+                            if (theDefense == "Cheval de Frise (A)") {$scope.teams.autoChevalDeFriseAch="Crossed";$scope.teams.autoChevalDeFriseCrossCount++;}
+                            if (theDefense == "Moat (B)") {$scope.teams.autoMoatAch="Crossed";$scope.teams.autoMoatCrossCount++;}
+                            if (theDefense == "Ramparts (B)") {$scope.teams.autoRampartsAch="Crossed";$scope.teams.autoRampartsCrossCount++;}
+                            if (theDefense == "Drawbridge (C)") {$scope.teams.autoDrawbridgeAch="Crossed";$scope.teams.autoDrawbridgeCrossCount++;}
+                            if (theDefense == "Sally Port (C)") {$scope.teams.autoSallyPortAch="Crossed";$scope.teams.autoSallyPortCrossCount++;}
+                            if (theDefense == "Rock Wall (D)") {$scope.teams.autoRockWallAch="Crossed";$scope.teams.autoRockWallCrossCount++;}
+                            if (theDefense == "Rough Terrain (D)") {$scope.teams.autoRoughTerrainAch="Crossed";$scope.teams.autoRoughTerrainCrossCount++;}
 
                           }
                           else if (theLabel == "Reached") {
 
-                            if (theDefense == "Low Bar" && $rootScope.teams.autoLowBarAch != "Crossed") {$rootScope.teams.autoLowBarAch="Reached";}
-                            if (theDefense == "Portcullis (A)" && $rootScope.teams.autoPortcullisAch != "Crossed") {$rootScope.teams.autoPortcullisAch="Reached";}
-                            if (theDefense == "Cheval de Frise (A)" && $rootScope.teams.autoChevalDeFriseAch != "Crossed") {$rootScope.teams.autoChevalDeFriseAch="Reached";}
-                            if (theDefense == "Moat (B)" && $rootScope.teams.autoMoatAch != "Crossed") {$rootScope.teams.autoMoatAch="Reached";}
-                            if (theDefense == "Ramparts (B)" && $rootScope.teams.autoRampartsAch != "Crossed") {$rootScope.teams.autoRampartsAch="Reached";}
-                            if (theDefense == "Drawbridge (C)" && $rootScope.teams.autoDrawbridgeAch != "Crossed") {$rootScope.teams.autoDrawbridgeAch="Reached";}
-                            if (theDefense == "Sally Port (C)" && $rootScope.teams.autoSallyPortAch != "Crossed") {$rootScope.teams.autoSallyPortAch="Reached";}
-                            if (theDefense == "Rock Wall (D)" && $rootScope.teams.autoRockWallAch != "Crossed") {$rootScope.teams.autoRockWallAch="Reached";}
-                            if (theDefense == "Rough Terrain (D)" && $rootScope.teams.autoRoughTerrainAch != "Crossed") {$rootScope.teams.autoRoughTerrainAch="Reached";}
+                            if (theDefense == "Low Bar" && $scope.teams.autoLowBarAch != "Crossed") {$scope.teams.autoLowBarAch="Reached";}
+                            if (theDefense == "Portcullis (A)" && $scope.teams.autoPortcullisAch != "Crossed") {$scope.teams.autoPortcullisAch="Reached";}
+                            if (theDefense == "Cheval de Frise (A)" && $scope.teams.autoChevalDeFriseAch != "Crossed") {$scope.teams.autoChevalDeFriseAch="Reached";}
+                            if (theDefense == "Moat (B)" && $scope.teams.autoMoatAch != "Crossed") {$scope.teams.autoMoatAch="Reached";}
+                            if (theDefense == "Ramparts (B)" && $scope.teams.autoRampartsAch != "Crossed") {$scope.teams.autoRampartsAch="Reached";}
+                            if (theDefense == "Drawbridge (C)" && $scope.teams.autoDrawbridgeAch != "Crossed") {$scope.teams.autoDrawbridgeAch="Reached";}
+                            if (theDefense == "Sally Port (C)" && $scope.teams.autoSallyPortAch != "Crossed") {$scope.teams.autoSallyPortAch="Reached";}
+                            if (theDefense == "Rock Wall (D)" && $scope.teams.autoRockWallAch != "Crossed") {$scope.teams.autoRockWallAch="Reached";}
+                            if (theDefense == "Rough Terrain (D)" && $scope.teams.autoRoughTerrainAch != "Crossed") {$scope.teams.autoRoughTerrainAch="Reached";}
 
                           }
                           else {
 
-                            if (theDefense == "Low Bar" && ($rootScope.teams.autoLowBarAch != "Crossed" && $rootScope.teams.autoLowBarAch != "Reached")) {$rootScope.teams.autoLowBarAch="Failed";}
-                            if (theDefense == "Portcullis (A)" && ($rootScope.teams.autoPortcullisAch != "Crossed" && $rootScope.teams.autoPortcullisAch != "Reached")) {$rootScope.teams.autoPortcullisAch="Failed";}
-                            if (theDefense == "Cheval de Frise (A)" && ($rootScope.teams.autoChevalDeFriseAch != "Crossed" && $rootScope.teams.autoChevalDeFriseAch != "Reached")) {$rootScope.teams.autoChevalDeFriseAch="Failed";}
-                            if (theDefense == "Moat (B)" && ($rootScope.teams.autoMoatAch != "Crossed" && $rootScope.teams.autoMoatAch != "Reached")) {$rootScope.teams.autoMoatAch="Failed";}
-                            if (theDefense == "Ramparts (B)" && ($rootScope.teams.autoRampartsAch != "Crossed" && $rootScope.teams.autoRampartsAch != "Reached")) {$rootScope.teams.autoRampartsAch="Failed";}
-                            if (theDefense == "Drawbridge (C)" && ($rootScope.teams.autoDrawbridgeAch != "Crossed" && $rootScope.teams.autoDrawbridgeAch != "Reached")) {$rootScope.teams.autoDrawbridgeAch="Failed";}
-                            if (theDefense == "Sally Port (C)" && ($rootScope.teams.autoSallyPortAch != "Crossed" && $rootScope.teams.autoSallyPortAch != "Reached")) {$rootScope.teams.autoSallyPortAch="Failed";}
-                            if (theDefense == "Rock Wall (D)" && ($rootScope.teams.autoRockWallAch != "Crossed" && $rootScope.teams.autoRockWallAch != "Reached")) {$rootScope.teams.autoRockWallAch="Failed";}
-                            if (theDefense == "Rough Terrain (D)" && ($rootScope.teams.autoRoughTerrainAch != "Crossed" && $rootScope.teams.autoRoughTerrainAch != "Reached")) {$rootScope.teams.autoRoughTerrainAch="Failed";}
+                            if (theDefense == "Low Bar" && ($scope.teams.autoLowBarAch != "Crossed" && $scope.teams.autoLowBarAch != "Reached")) {$scope.teams.autoLowBarAch="Failed";}
+                            if (theDefense == "Portcullis (A)" && ($scope.teams.autoPortcullisAch != "Crossed" && $scope.teams.autoPortcullisAch != "Reached")) {$scope.teams.autoPortcullisAch="Failed";}
+                            if (theDefense == "Cheval de Frise (A)" && ($scope.teams.autoChevalDeFriseAch != "Crossed" && $scope.teams.autoChevalDeFriseAch != "Reached")) {$scope.teams.autoChevalDeFriseAch="Failed";}
+                            if (theDefense == "Moat (B)" && ($scope.teams.autoMoatAch != "Crossed" && $scope.teams.autoMoatAch != "Reached")) {$scope.teams.autoMoatAch="Failed";}
+                            if (theDefense == "Ramparts (B)" && ($scope.teams.autoRampartsAch != "Crossed" && $scope.teams.autoRampartsAch != "Reached")) {$scope.teams.autoRampartsAch="Failed";}
+                            if (theDefense == "Drawbridge (C)" && ($scope.teams.autoDrawbridgeAch != "Crossed" && $scope.teams.autoDrawbridgeAch != "Reached")) {$scope.teams.autoDrawbridgeAch="Failed";}
+                            if (theDefense == "Sally Port (C)" && ($scope.teams.autoSallyPortAch != "Crossed" && $scope.teams.autoSallyPortAch != "Reached")) {$scope.teams.autoSallyPortAch="Failed";}
+                            if (theDefense == "Rock Wall (D)" && ($scope.teams.autoRockWallAch != "Crossed" && $scope.teams.autoRockWallAch != "Reached")) {$scope.teams.autoRockWallAch="Failed";}
+                            if (theDefense == "Rough Terrain (D)" && ($scope.teams.autoRoughTerrainAch != "Crossed" && $scope.teams.autoRoughTerrainAch != "Reached")) {$scope.teams.autoRoughTerrainAch="Failed";}
 
                           }
 
-                          if (theDefense == "Low Bar") {$rootScope.teams.autoLowBarAppearCount++;}
-                          if (theDefense == "Portcullis (A)") {$rootScope.teams.autoPortcullisAppearCount++;}
-                          if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.autoChevalDeFriseAppearCount++;}
-                          if (theDefense == "Moat (B)") {$rootScope.teams.autoMoatAppearCount++;}
-                          if (theDefense == "Ramparts (B)") {$rootScope.teams.autoRampartsAppearCount++;}
-                          if (theDefense == "Drawbridge (C)") {$rootScope.teams.autoDrawbridgeAppearCount++;}
-                          if (theDefense == "Sally Port (C)") {$rootScope.teams.autoSallyPortAppearCount++;}
-                          if (theDefense == "Rock Wall (D)") {$rootScope.teams.autoRockWallAppearCount++;}
-                          if (theDefense == "Rough Terrain (D)") {$rootScope.teams.autoRoughTerrainAppearCount++;}
+                          if (theDefense == "Low Bar") {$scope.teams.autoLowBarAppearCount++;}
+                          if (theDefense == "Portcullis (A)") {$scope.teams.autoPortcullisAppearCount++;}
+                          if (theDefense == "Cheval de Frise (A)") {$scope.teams.autoChevalDeFriseAppearCount++;}
+                          if (theDefense == "Moat (B)") {$scope.teams.autoMoatAppearCount++;}
+                          if (theDefense == "Ramparts (B)") {$scope.teams.autoRampartsAppearCount++;}
+                          if (theDefense == "Drawbridge (C)") {$scope.teams.autoDrawbridgeAppearCount++;}
+                          if (theDefense == "Sally Port (C)") {$scope.teams.autoSallyPortAppearCount++;}
+                          if (theDefense == "Rock Wall (D)") {$scope.teams.autoRockWallAppearCount++;}
+                          if (theDefense == "Rough Terrain (D)") {$scope.teams.autoRoughTerrainAppearCount++;}
 
                         }
 
@@ -329,122 +334,150 @@ angular.module('starter.controllers', ['ionic'])
 
                           if (theLabel == "Crossed") {
 
-                            if (theDefense == "Low Bar") {$rootScope.teams.teleopLowBarAch="Crossed";$rootScope.teams.teleopLowBarCrossCount++;}
-                            if (theDefense == "Portcullis (A)") {$rootScope.teams.teleopPortcullisAch="Crossed";$rootScope.teams.teleopPortcullisCrossCount++;}
-                            if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.teleopChevalDeFriseAch="Crossed";$rootScope.teams.teleopChevalDeFriseCrossCount++;}
-                            if (theDefense == "Moat (B)") {$rootScope.teams.teleopMoatAch="Crossed";$rootScope.teams.teleopMoatCrossCount++;}
-                            if (theDefense == "Ramparts (B)") {$rootScope.teams.teleopRampartsAch="Crossed";$rootScope.teams.teleopRampartsCrossCount++;}
-                            if (theDefense == "Drawbridge (C)") {$rootScope.teams.teleopDrawbridgeAch="Crossed";$rootScope.teams.teleopDrawbridgeCrossCount++;}
-                            if (theDefense == "Sally Port (C)") {$rootScope.teams.teleopSallyPortAch="Crossed";$rootScope.teams.teleopSallyPortCrossCount++;}
-                            if (theDefense == "Rock Wall (D)") {$rootScope.teams.teleopRockWallAch="Crossed";$rootScope.teams.teleopRockWallCrossCount++;}
-                            if (theDefense == "Rough Terrain (D)") {$rootScope.teams.teleopRoughTerrainAch="Crossed";$rootScope.teams.teleopRoughTerrainCrossCount++;}
+                            if (theDefense == "Low Bar") {$scope.teams.teleopLowBarAch="Crossed";$scope.teams.teleopLowBarCrossCount++;}
+                            if (theDefense == "Portcullis (A)") {$scope.teams.teleopPortcullisAch="Crossed";$scope.teams.teleopPortcullisCrossCount++;}
+                            if (theDefense == "Cheval de Frise (A)") {$scope.teams.teleopChevalDeFriseAch="Crossed";$scope.teams.teleopChevalDeFriseCrossCount++;}
+                            if (theDefense == "Moat (B)") {$scope.teams.teleopMoatAch="Crossed";$scope.teams.teleopMoatCrossCount++;}
+                            if (theDefense == "Ramparts (B)") {$scope.teams.teleopRampartsAch="Crossed";$scope.teams.teleopRampartsCrossCount++;}
+                            if (theDefense == "Drawbridge (C)") {$scope.teams.teleopDrawbridgeAch="Crossed";$scope.teams.teleopDrawbridgeCrossCount++;}
+                            if (theDefense == "Sally Port (C)") {$scope.teams.teleopSallyPortAch="Crossed";$scope.teams.teleopSallyPortCrossCount++;}
+                            if (theDefense == "Rock Wall (D)") {$scope.teams.teleopRockWallAch="Crossed";$scope.teams.teleopRockWallCrossCount++;}
+                            if (theDefense == "Rough Terrain (D)") {$scope.teams.teleopRoughTerrainAch="Crossed";$scope.teams.teleopRoughTerrainCrossCount++;}
 
                           }
                           else {
 
-                            if (theDefense == "Low Bar" && ($rootScope.teams.teleopLowBarAch != "Crossed" && $rootScope.teams.teleopLowBarAch != "Reached")) {$rootScope.teams.teleopLowBarAch="Failed";}
-                            if (theDefense == "Portcullis (A)" && ($rootScope.teams.teleopPortcullisAch != "Crossed" && $rootScope.teams.teleopPortcullisAch != "Reached")) {$rootScope.teams.teleopPortcullisAch="Failed";}
-                            if (theDefense == "Cheval de Frise (A)" && ($rootScope.teams.teleopChevalDeFriseAch != "Crossed" && $rootScope.teams.teleopChevalDeFriseAch != "Reached")) {$rootScope.teams.teleopChevalDeFriseAch="Failed";}
-                            if (theDefense == "Moat (B)" && ($rootScope.teams.teleopMoatAch != "Crossed" && $rootScope.teams.teleopMoatAch != "Reached")) {$rootScope.teams.teleopMoatAch="Failed";}
-                            if (theDefense == "Ramparts (B)" && ($rootScope.teams.teleopRampartsAch != "Crossed" && $rootScope.teams.teleopRampartsAch != "Reached")) {$rootScope.teams.teleopRampartsAch="Failed";}
-                            if (theDefense == "Drawbridge (C)" && ($rootScope.teams.teleopDrawbridgeAch != "Crossed" && $rootScope.teams.teleopDrawbridgeAch != "Reached")) {$rootScope.teams.teleopDrawbridgeAch="Failed";}
-                            if (theDefense == "Sally Port (C)" && ($rootScope.teams.teleopSallyPortAch != "Crossed" && $rootScope.teams.teleopSallyPortAch != "Reached")) {$rootScope.teams.teleopSallyPortAch="Failed";}
-                            if (theDefense == "Rock Wall (D)" && ($rootScope.teams.teleopRockWallAch != "Crossed" && $rootScope.teams.teleopRockWallAch != "Reached")) {$rootScope.teams.teleopRockWallAch="Failed";}
-                            if (theDefense == "Rough Terrain (D)" && ($rootScope.teams.teleopRoughTerrainAch != "Crossed" && $rootScope.teams.teleopRoughTerrainAch != "Reached")) {$rootScope.teams.teleopRoughTerrainAch="Failed";}
+                            if (theDefense == "Low Bar" && ($scope.teams.teleopLowBarAch != "Crossed" && $scope.teams.teleopLowBarAch != "Reached")) {$scope.teams.teleopLowBarAch="Failed";}
+                            if (theDefense == "Portcullis (A)" && ($scope.teams.teleopPortcullisAch != "Crossed" && $scope.teams.teleopPortcullisAch != "Reached")) {$scope.teams.teleopPortcullisAch="Failed";}
+                            if (theDefense == "Cheval de Frise (A)" && ($scope.teams.teleopChevalDeFriseAch != "Crossed" && $scope.teams.teleopChevalDeFriseAch != "Reached")) {$scope.teams.teleopChevalDeFriseAch="Failed";}
+                            if (theDefense == "Moat (B)" && ($scope.teams.teleopMoatAch != "Crossed" && $scope.teams.teleopMoatAch != "Reached")) {$scope.teams.teleopMoatAch="Failed";}
+                            if (theDefense == "Ramparts (B)" && ($scope.teams.teleopRampartsAch != "Crossed" && $scope.teams.teleopRampartsAch != "Reached")) {$scope.teams.teleopRampartsAch="Failed";}
+                            if (theDefense == "Drawbridge (C)" && ($scope.teams.teleopDrawbridgeAch != "Crossed" && $scope.teams.teleopDrawbridgeAch != "Reached")) {$scope.teams.teleopDrawbridgeAch="Failed";}
+                            if (theDefense == "Sally Port (C)" && ($scope.teams.teleopSallyPortAch != "Crossed" && $scope.teams.teleopSallyPortAch != "Reached")) {$scope.teams.teleopSallyPortAch="Failed";}
+                            if (theDefense == "Rock Wall (D)" && ($scope.teams.teleopRockWallAch != "Crossed" && $scope.teams.teleopRockWallAch != "Reached")) {$scope.teams.teleopRockWallAch="Failed";}
+                            if (theDefense == "Rough Terrain (D)" && ($scope.teams.teleopRoughTerrainAch != "Crossed" && $scope.teams.teleopRoughTerrainAch != "Reached")) {$scope.teams.teleopRoughTerrainAch="Failed";}
 
                           }
 
-                          if (theDefense == "Low Bar") {$rootScope.teams.teleopLowBarAppearCount++;}
-                          if (theDefense == "Portcullis (A)") {$rootScope.teams.teleopPortcullisAppearCount++;}
-                          if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.teleopChevalDeFriseAppearCount++;}
-                          if (theDefense == "Moat (B)") {$rootScope.teams.teleopMoatAppearCount++;}
-                          if (theDefense == "Ramparts (B)") {$rootScope.teams.teleopRampartsAppearCount++;}
-                          if (theDefense == "Drawbridge (C)") {$rootScope.teams.teleopDrawbridgeAppearCount++;}
-                          if (theDefense == "Sally Port (C)") {$rootScope.teams.teleopSallyPortAppearCount++;}
-                          if (theDefense == "Rock Wall (D)") {$rootScope.teams.teleopRockWallAppearCount++;}
-                          if (theDefense == "Rough Terrain (D)") {$rootScope.teams.teleopRoughTerrainAppearCount++;}
+                          if (theDefense == "Low Bar") {$scope.teams.teleopLowBarAppearCount++;}
+                          if (theDefense == "Portcullis (A)") {$scope.teams.teleopPortcullisAppearCount++;}
+                          if (theDefense == "Cheval de Frise (A)") {$scope.teams.teleopChevalDeFriseAppearCount++;}
+                          if (theDefense == "Moat (B)") {$scope.teams.teleopMoatAppearCount++;}
+                          if (theDefense == "Ramparts (B)") {$scope.teams.teleopRampartsAppearCount++;}
+                          if (theDefense == "Drawbridge (C)") {$scope.teams.teleopDrawbridgeAppearCount++;}
+                          if (theDefense == "Sally Port (C)") {$scope.teams.teleopSallyPortAppearCount++;}
+                          if (theDefense == "Rock Wall (D)") {$scope.teams.teleopRockWallAppearCount++;}
+                          if (theDefense == "Rough Terrain (D)") {$scope.teams.teleopRoughTerrainAppearCount++;}
 
                         }
 
-            $rootScope.teams.team = $rootScope.filter,
-            $rootScope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
-            $rootScope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
-            $rootScope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
-            $rootScope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
+            $scope.teams.team = $rootScope.filter,
+            $scope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
+            $scope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
+            $scope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
+            $scope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
 
-            $rootScope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
-            $rootScope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
-            $rootScope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
-            $rootScope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
+            $scope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
+            $scope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
+            $scope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
+            $scope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
 
-            $rootScope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
-            $rootScope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
+            $scope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
+            $scope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
 
             if ($scope.pull[i].teleop.towerAttack.towerLabel == "Defended")
             {
-              $rootScope.teams.teleopTowerAttackFailCount++;
+              $scope.teams.teleopTowerAttackFailCount++;
             }
             else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
             {
-              $rootScope.teams.teleopTowerAttackChallengeCount++;
+              $scope.teams.teleopTowerAttackChallengeCount++;
             }
             else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
             {
-              $rootScope.teams.teleopTowerAttackScaleCount++;
+              $scope.teams.teleopTowerAttackScaleCount++;
             }
 
-            $rootScope.teams.totalTotalScore += $scope.pull[i].totalscore;
+            $scope.teams.totalTotalScore += $scope.pull[i].totalscore;
 
             if ($scope.pull[i].botType = "Courtyard")
             {
-              $rootScope.teams.timesStartCourtyard++;
+              $scope.teams.timesStartCourtyard++;
             }
             else if ($scope.pull[i].botType = "Auto Zone")
             {
-              $rootScope.teams.timesStartAutoZone++;
+              $scope.teams.timesStartAutoZone++;
             }
             else if ($scope.pull[i].botType = "Spy Start")
             {
-              $rootScope.teams.timesStartSpyStart++;
+              $scope.teams.timesStartSpyStart++;
             }
 
-            $rootScope.teams.totalGameCount++;
+            $scope.teams.totalGameCount++;
 
-            $rootScope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
-            $rootScope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
+            $scope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
+            $scope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
           }
 
           $scope.refreshed = true;
 
         }
 
-        $rootScope.teams.autoLowBallAverage = $rootScope.teams.autoLowBallTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.autoHighBallAverage = $rootScope.teams.autoHighBallTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.autoLowBallAverage = $scope.teams.autoLowBallTotal/$scope.teams.totalGameCount;
+        $scope.teams.autoHighBallAverage = $scope.teams.autoHighBallTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopLowBallAverage = $rootScope.teams.teleopLowBallTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopHighBallAverage = $rootScope.teams.teleopHighBallTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.teleopLowBallAverage = $scope.teams.teleopLowBallTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopHighBallAverage = $scope.teams.teleopHighBallTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.autoLowShotAverage = $rootScope.teams.autoLowShotTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.autoHighShotAverage = $rootScope.teams.autoHighShotTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.autoLowShotAverage = $scope.teams.autoLowShotTotal/$scope.teams.totalGameCount;
+        $scope.teams.autoHighShotAverage = $scope.teams.autoHighShotTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopLowShotAverage = $rootScope.teams.teleopLowShotTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopHighShotAverage = $rootScope.teams.teleopHighShotTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.teleopLowShotAverage = $scope.teams.teleopLowShotTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopHighShotAverage = $scope.teams.teleopHighShotTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopTotalDamageAverage = $rootScope.teams.teleopTotalDamageTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopCycleTimeAverage = $rootScope.teams.teleopCycleTimeTotal/$rootScope.teams.totalGameCount/100;
+        $scope.teams.teleopTotalDamageAverage = $scope.teams.teleopTotalDamageTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/$scope.teams.totalGameCount/100;
 
-        $rootScope.teams.overallAccuracy = ($rootScope.teams.autoLowBallTotal +
-                                            $rootScope.teams.autoHighBallTotal +
-                                            $rootScope.teams.teleopLowBallTotal +
-                                            $rootScope.teams.teleopHighBallTotal)/
-                                           ($rootScope.teams.teleopHighShotTotal +
-                                            $rootScope.teams.teleopLowShotTotal +
-                                            $rootScope.teams.autoHighShotTotal +
-                                            $rootScope.teams.autoLowShotTotal)*100;
+        $scope.teams.overallAccuracy = ($scope.teams.autoLowBallTotal +
+                                            $scope.teams.autoHighBallTotal +
+                                            $scope.teams.teleopLowBallTotal +
+                                            $scope.teams.teleopHighBallTotal)/
+                                           ($scope.teams.teleopHighShotTotal +
+                                            $scope.teams.teleopLowShotTotal +
+                                            $scope.teams.autoHighShotTotal +
+                                            $scope.teams.autoLowShotTotal)*100;
 
-        $rootScope.teams.averageTotalScore = $rootScope.teams.totalTotalScore/$rootScope.teams.totalGameCount;
+        $scope.teams.averageTotalScore = $scope.teams.totalTotalScore/$scope.teams.totalGameCount;
 
         console.log("Success!");
+
+        if ($scope.teams.totalGameCount <= 0)
+        {
+          $scope.notAvailable = "Team not available! You can use these teams: ";
+          $scope.listTeams = [];
+
+          $scope.listTeams.push($scope.pull[0].team);
+          $scope.notAvailable += $scope.pull[0].team;
+
+          console.log ("Not available!");
+          for (check = 1; check < $scope.pull.length; check++) {
+            var add = true;
+            if ($scope.listTeams.length>0)
+            {
+              for (doubleCheck = 0; doubleCheck < $scope.listTeams.length; doubleCheck++) {
+                if ($scope.pull[check].team == $scope.listTeams[doubleCheck] || !$scope.pull[check].team)
+                {
+                  add = false;
+                }
+              }
+            }
+            if (add == true){
+              $scope.listTeams.push($scope.pull[check].team);
+              $scope.notAvailable += ", " + $scope.pull[check].team;
+            }
+          }
+          console.log ($scope.notAvailable);
+        }
 
       });
   }
@@ -516,7 +549,7 @@ angular.module('starter.controllers', ['ionic'])
 
         console.log("Team: " + theTeam);
 
-        $rootScope.teams =    {team: 0,
+        $scope.teams =    {team: 0,
                               autoLowBallTotal: 0, autoHighBallTotal: 0, // Convert to Averages
                               autoLowBallAverage: 0, autoHighBallAverage: 0,
                               autoLowShotTotal: 0, autoHighShotTotal: 0,
@@ -584,8 +617,11 @@ angular.module('starter.controllers', ['ionic'])
 
         for (i = 0; i < $scope.pull.length; i++) {
 
+
+
           if ($scope.pull[i].team == $rootScope.filter)
           {
+            console.log("+++ New Entry! " + ($scope.teams.totalGameCount +1) + " +++")
 
             if ($scope.pull[i].teleop)
             {
@@ -610,53 +646,53 @@ angular.module('starter.controllers', ['ionic'])
 
                           if (theLabel == "Crossed") {
 
-                            if (theDefense == "Low Bar") {$rootScope.teams.autoLowBarAch="Crossed";$rootScope.teams.autoLowBarCrossCount++;}
-                            if (theDefense == "Portcullis (A)") {$rootScope.teams.autoPortcullisAch="Crossed";$rootScope.teams.autoPortcullisCrossCount++;}
-                            if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.autoChevalDeFriseAch="Crossed";$rootScope.teams.autoChevalDeFriseCrossCount++;}
-                            if (theDefense == "Moat (B)") {$rootScope.teams.autoMoatAch="Crossed";$rootScope.teams.autoMoatCrossCount++;}
-                            if (theDefense == "Ramparts (B)") {$rootScope.teams.autoRampartsAch="Crossed";$rootScope.teams.autoRampartsCrossCount++;}
-                            if (theDefense == "Drawbridge (C)") {$rootScope.teams.autoDrawbridgeAch="Crossed";$rootScope.teams.autoDrawbridgeCrossCount++;}
-                            if (theDefense == "Sally Port (C)") {$rootScope.teams.autoSallyPortAch="Crossed";$rootScope.teams.autoSallyPortCrossCount++;}
-                            if (theDefense == "Rock Wall (D)") {$rootScope.teams.autoRockWallAch="Crossed";$rootScope.teams.autoRockWallCrossCount++;}
-                            if (theDefense == "Rough Terrain (D)") {$rootScope.teams.autoRoughTerrainAch="Crossed";$rootScope.teams.autoRoughTerrainCrossCount++;}
+                            if (theDefense == "Low Bar") {$scope.teams.autoLowBarAch="Crossed";$scope.teams.autoLowBarCrossCount++;}
+                            if (theDefense == "Portcullis (A)") {$scope.teams.autoPortcullisAch="Crossed";$scope.teams.autoPortcullisCrossCount++;}
+                            if (theDefense == "Cheval de Frise (A)") {$scope.teams.autoChevalDeFriseAch="Crossed";$scope.teams.autoChevalDeFriseCrossCount++;}
+                            if (theDefense == "Moat (B)") {$scope.teams.autoMoatAch="Crossed";$scope.teams.autoMoatCrossCount++;}
+                            if (theDefense == "Ramparts (B)") {$scope.teams.autoRampartsAch="Crossed";$scope.teams.autoRampartsCrossCount++;}
+                            if (theDefense == "Drawbridge (C)") {$scope.teams.autoDrawbridgeAch="Crossed";$scope.teams.autoDrawbridgeCrossCount++;}
+                            if (theDefense == "Sally Port (C)") {$scope.teams.autoSallyPortAch="Crossed";$scope.teams.autoSallyPortCrossCount++;}
+                            if (theDefense == "Rock Wall (D)") {$scope.teams.autoRockWallAch="Crossed";$scope.teams.autoRockWallCrossCount++;}
+                            if (theDefense == "Rough Terrain (D)") {$scope.teams.autoRoughTerrainAch="Crossed";$scope.teams.autoRoughTerrainCrossCount++;}
 
                           }
                           else if (theLabel == "Reached") {
 
-                            if (theDefense == "Low Bar" && $rootScope.teams.autoLowBarAch != "Crossed") {$rootScope.teams.autoLowBarAch="Reached";}
-                            if (theDefense == "Portcullis (A)" && $rootScope.teams.autoPortcullisAch != "Crossed") {$rootScope.teams.autoPortcullisAch="Reached";}
-                            if (theDefense == "Cheval de Frise (A)" && $rootScope.teams.autoChevalDeFriseAch != "Crossed") {$rootScope.teams.autoChevalDeFriseAch="Reached";}
-                            if (theDefense == "Moat (B)" && $rootScope.teams.autoMoatAch != "Crossed") {$rootScope.teams.autoMoatAch="Reached";}
-                            if (theDefense == "Ramparts (B)" && $rootScope.teams.autoRampartsAch != "Crossed") {$rootScope.teams.autoRampartsAch="Reached";}
-                            if (theDefense == "Drawbridge (C)" && $rootScope.teams.autoDrawbridgeAch != "Crossed") {$rootScope.teams.autoDrawbridgeAch="Reached";}
-                            if (theDefense == "Sally Port (C)" && $rootScope.teams.autoSallyPortAch != "Crossed") {$rootScope.teams.autoSallyPortAch="Reached";}
-                            if (theDefense == "Rock Wall (D)" && $rootScope.teams.autoRockWallAch != "Crossed") {$rootScope.teams.autoRockWallAch="Reached";}
-                            if (theDefense == "Rough Terrain (D)" && $rootScope.teams.autoRoughTerrainAch != "Crossed") {$rootScope.teams.autoRoughTerrainAch="Reached";}
+                            if (theDefense == "Low Bar" && $scope.teams.autoLowBarAch != "Crossed") {$scope.teams.autoLowBarAch="Reached";}
+                            if (theDefense == "Portcullis (A)" && $scope.teams.autoPortcullisAch != "Crossed") {$scope.teams.autoPortcullisAch="Reached";}
+                            if (theDefense == "Cheval de Frise (A)" && $scope.teams.autoChevalDeFriseAch != "Crossed") {$scope.teams.autoChevalDeFriseAch="Reached";}
+                            if (theDefense == "Moat (B)" && $scope.teams.autoMoatAch != "Crossed") {$scope.teams.autoMoatAch="Reached";}
+                            if (theDefense == "Ramparts (B)" && $scope.teams.autoRampartsAch != "Crossed") {$scope.teams.autoRampartsAch="Reached";}
+                            if (theDefense == "Drawbridge (C)" && $scope.teams.autoDrawbridgeAch != "Crossed") {$scope.teams.autoDrawbridgeAch="Reached";}
+                            if (theDefense == "Sally Port (C)" && $scope.teams.autoSallyPortAch != "Crossed") {$scope.teams.autoSallyPortAch="Reached";}
+                            if (theDefense == "Rock Wall (D)" && $scope.teams.autoRockWallAch != "Crossed") {$scope.teams.autoRockWallAch="Reached";}
+                            if (theDefense == "Rough Terrain (D)" && $scope.teams.autoRoughTerrainAch != "Crossed") {$scope.teams.autoRoughTerrainAch="Reached";}
 
                           }
                           else {
 
-                            if (theDefense == "Low Bar" && ($rootScope.teams.autoLowBarAch != "Crossed" && $rootScope.teams.autoLowBarAch != "Reached")) {$rootScope.teams.autoLowBarAch="Failed";}
-                            if (theDefense == "Portcullis (A)" && ($rootScope.teams.autoPortcullisAch != "Crossed" && $rootScope.teams.autoPortcullisAch != "Reached")) {$rootScope.teams.autoPortcullisAch="Failed";}
-                            if (theDefense == "Cheval de Frise (A)" && ($rootScope.teams.autoChevalDeFriseAch != "Crossed" && $rootScope.teams.autoChevalDeFriseAch != "Reached")) {$rootScope.teams.autoChevalDeFriseAch="Failed";}
-                            if (theDefense == "Moat (B)" && ($rootScope.teams.autoMoatAch != "Crossed" && $rootScope.teams.autoMoatAch != "Reached")) {$rootScope.teams.autoMoatAch="Failed";}
-                            if (theDefense == "Ramparts (B)" && ($rootScope.teams.autoRampartsAch != "Crossed" && $rootScope.teams.autoRampartsAch != "Reached")) {$rootScope.teams.autoRampartsAch="Failed";}
-                            if (theDefense == "Drawbridge (C)" && ($rootScope.teams.autoDrawbridgeAch != "Crossed" && $rootScope.teams.autoDrawbridgeAch != "Reached")) {$rootScope.teams.autoDrawbridgeAch="Failed";}
-                            if (theDefense == "Sally Port (C)" && ($rootScope.teams.autoSallyPortAch != "Crossed" && $rootScope.teams.autoSallyPortAch != "Reached")) {$rootScope.teams.autoSallyPortAch="Failed";}
-                            if (theDefense == "Rock Wall (D)" && ($rootScope.teams.autoRockWallAch != "Crossed" && $rootScope.teams.autoRockWallAch != "Reached")) {$rootScope.teams.autoRockWallAch="Failed";}
-                            if (theDefense == "Rough Terrain (D)" && ($rootScope.teams.autoRoughTerrainAch != "Crossed" && $rootScope.teams.autoRoughTerrainAch != "Reached")) {$rootScope.teams.autoRoughTerrainAch="Failed";}
+                            if (theDefense == "Low Bar" && ($scope.teams.autoLowBarAch != "Crossed" && $scope.teams.autoLowBarAch != "Reached")) {$scope.teams.autoLowBarAch="Failed";}
+                            if (theDefense == "Portcullis (A)" && ($scope.teams.autoPortcullisAch != "Crossed" && $scope.teams.autoPortcullisAch != "Reached")) {$scope.teams.autoPortcullisAch="Failed";}
+                            if (theDefense == "Cheval de Frise (A)" && ($scope.teams.autoChevalDeFriseAch != "Crossed" && $scope.teams.autoChevalDeFriseAch != "Reached")) {$scope.teams.autoChevalDeFriseAch="Failed";}
+                            if (theDefense == "Moat (B)" && ($scope.teams.autoMoatAch != "Crossed" && $scope.teams.autoMoatAch != "Reached")) {$scope.teams.autoMoatAch="Failed";}
+                            if (theDefense == "Ramparts (B)" && ($scope.teams.autoRampartsAch != "Crossed" && $scope.teams.autoRampartsAch != "Reached")) {$scope.teams.autoRampartsAch="Failed";}
+                            if (theDefense == "Drawbridge (C)" && ($scope.teams.autoDrawbridgeAch != "Crossed" && $scope.teams.autoDrawbridgeAch != "Reached")) {$scope.teams.autoDrawbridgeAch="Failed";}
+                            if (theDefense == "Sally Port (C)" && ($scope.teams.autoSallyPortAch != "Crossed" && $scope.teams.autoSallyPortAch != "Reached")) {$scope.teams.autoSallyPortAch="Failed";}
+                            if (theDefense == "Rock Wall (D)" && ($scope.teams.autoRockWallAch != "Crossed" && $scope.teams.autoRockWallAch != "Reached")) {$scope.teams.autoRockWallAch="Failed";}
+                            if (theDefense == "Rough Terrain (D)" && ($scope.teams.autoRoughTerrainAch != "Crossed" && $scope.teams.autoRoughTerrainAch != "Reached")) {$scope.teams.autoRoughTerrainAch="Failed";}
 
                           }
 
-                          if (theDefense == "Low Bar") {$rootScope.teams.autoLowBarAppearCount++;}
-                          if (theDefense == "Portcullis (A)") {$rootScope.teams.autoPortcullisAppearCount++;}
-                          if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.autoChevalDeFriseAppearCount++;}
-                          if (theDefense == "Moat (B)") {$rootScope.teams.autoMoatAppearCount++;}
-                          if (theDefense == "Ramparts (B)") {$rootScope.teams.autoRampartsAppearCount++;}
-                          if (theDefense == "Drawbridge (C)") {$rootScope.teams.autoDrawbridgeAppearCount++;}
-                          if (theDefense == "Sally Port (C)") {$rootScope.teams.autoSallyPortAppearCount++;}
-                          if (theDefense == "Rock Wall (D)") {$rootScope.teams.autoRockWallAppearCount++;}
-                          if (theDefense == "Rough Terrain (D)") {$rootScope.teams.autoRoughTerrainAppearCount++;}
+                          if (theDefense == "Low Bar") {$scope.teams.autoLowBarAppearCount++;}
+                          if (theDefense == "Portcullis (A)") {$scope.teams.autoPortcullisAppearCount++;}
+                          if (theDefense == "Cheval de Frise (A)") {$scope.teams.autoChevalDeFriseAppearCount++;}
+                          if (theDefense == "Moat (B)") {$scope.teams.autoMoatAppearCount++;}
+                          if (theDefense == "Ramparts (B)") {$scope.teams.autoRampartsAppearCount++;}
+                          if (theDefense == "Drawbridge (C)") {$scope.teams.autoDrawbridgeAppearCount++;}
+                          if (theDefense == "Sally Port (C)") {$scope.teams.autoSallyPortAppearCount++;}
+                          if (theDefense == "Rock Wall (D)") {$scope.teams.autoRockWallAppearCount++;}
+                          if (theDefense == "Rough Terrain (D)") {$scope.teams.autoRoughTerrainAppearCount++;}
 
                         }
 
@@ -673,137 +709,137 @@ angular.module('starter.controllers', ['ionic'])
 
                           if (theLabel == "Crossed") {
 
-                            if (theDefense == "Low Bar") {$rootScope.teams.teleopLowBarAch="Crossed";$rootScope.teams.teleopLowBarCrossCount++;}
-                            if (theDefense == "Portcullis (A)") {$rootScope.teams.teleopPortcullisAch="Crossed";$rootScope.teams.teleopPortcullisCrossCount++;}
-                            if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.teleopChevalDeFriseAch="Crossed";$rootScope.teams.teleopChevalDeFriseCrossCount++;}
-                            if (theDefense == "Moat (B)") {$rootScope.teams.teleopMoatAch="Crossed";$rootScope.teams.teleopMoatCrossCount++;}
-                            if (theDefense == "Ramparts (B)") {$rootScope.teams.teleopRampartsAch="Crossed";$rootScope.teams.teleopRampartsCrossCount++;}
-                            if (theDefense == "Drawbridge (C)") {$rootScope.teams.teleopDrawbridgeAch="Crossed";$rootScope.teams.teleopDrawbridgeCrossCount++;}
-                            if (theDefense == "Sally Port (C)") {$rootScope.teams.teleopSallyPortAch="Crossed";$rootScope.teams.teleopSallyPortCrossCount++;}
-                            if (theDefense == "Rock Wall (D)") {$rootScope.teams.teleopRockWallAch="Crossed";$rootScope.teams.teleopRockWallCrossCount++;}
-                            if (theDefense == "Rough Terrain (D)") {$rootScope.teams.teleopRoughTerrainAch="Crossed";$rootScope.teams.teleopRoughTerrainCrossCount++;}
+                            if (theDefense == "Low Bar") {$scope.teams.teleopLowBarAch="Crossed";$scope.teams.teleopLowBarCrossCount++;}
+                            if (theDefense == "Portcullis (A)") {$scope.teams.teleopPortcullisAch="Crossed";$scope.teams.teleopPortcullisCrossCount++;}
+                            if (theDefense == "Cheval de Frise (A)") {$scope.teams.teleopChevalDeFriseAch="Crossed";$scope.teams.teleopChevalDeFriseCrossCount++;}
+                            if (theDefense == "Moat (B)") {$scope.teams.teleopMoatAch="Crossed";$scope.teams.teleopMoatCrossCount++;}
+                            if (theDefense == "Ramparts (B)") {$scope.teams.teleopRampartsAch="Crossed";$scope.teams.teleopRampartsCrossCount++;}
+                            if (theDefense == "Drawbridge (C)") {$scope.teams.teleopDrawbridgeAch="Crossed";$scope.teams.teleopDrawbridgeCrossCount++;}
+                            if (theDefense == "Sally Port (C)") {$scope.teams.teleopSallyPortAch="Crossed";$scope.teams.teleopSallyPortCrossCount++;}
+                            if (theDefense == "Rock Wall (D)") {$scope.teams.teleopRockWallAch="Crossed";$scope.teams.teleopRockWallCrossCount++;}
+                            if (theDefense == "Rough Terrain (D)") {$scope.teams.teleopRoughTerrainAch="Crossed";$scope.teams.teleopRoughTerrainCrossCount++;}
 
                           }
                           else {
 
-                            if (theDefense == "Low Bar" && ($rootScope.teams.teleopLowBarAch != "Crossed" && $rootScope.teams.teleopLowBarAch != "Reached")) {$rootScope.teams.teleopLowBarAch="Failed";}
-                            if (theDefense == "Portcullis (A)" && ($rootScope.teams.teleopPortcullisAch != "Crossed" && $rootScope.teams.teleopPortcullisAch != "Reached")) {$rootScope.teams.teleopPortcullisAch="Failed";}
-                            if (theDefense == "Cheval de Frise (A)" && ($rootScope.teams.teleopChevalDeFriseAch != "Crossed" && $rootScope.teams.teleopChevalDeFriseAch != "Reached")) {$rootScope.teams.teleopChevalDeFriseAch="Failed";}
-                            if (theDefense == "Moat (B)" && ($rootScope.teams.teleopMoatAch != "Crossed" && $rootScope.teams.teleopMoatAch != "Reached")) {$rootScope.teams.teleopMoatAch="Failed";}
-                            if (theDefense == "Ramparts (B)" && ($rootScope.teams.teleopRampartsAch != "Crossed" && $rootScope.teams.teleopRampartsAch != "Reached")) {$rootScope.teams.teleopRampartsAch="Failed";}
-                            if (theDefense == "Drawbridge (C)" && ($rootScope.teams.teleopDrawbridgeAch != "Crossed" && $rootScope.teams.teleopDrawbridgeAch != "Reached")) {$rootScope.teams.teleopDrawbridgeAch="Failed";}
-                            if (theDefense == "Sally Port (C)" && ($rootScope.teams.teleopSallyPortAch != "Crossed" && $rootScope.teams.teleopSallyPortAch != "Reached")) {$rootScope.teams.teleopSallyPortAch="Failed";}
-                            if (theDefense == "Rock Wall (D)" && ($rootScope.teams.teleopRockWallAch != "Crossed" && $rootScope.teams.teleopRockWallAch != "Reached")) {$rootScope.teams.teleopRockWallAch="Failed";}
-                            if (theDefense == "Rough Terrain (D)" && ($rootScope.teams.teleopRoughTerrainAch != "Crossed" && $rootScope.teams.teleopRoughTerrainAch != "Reached")) {$rootScope.teams.teleopRoughTerrainAch="Failed";}
+                            if (theDefense == "Low Bar" && ($scope.teams.teleopLowBarAch != "Crossed" && $scope.teams.teleopLowBarAch != "Reached")) {$scope.teams.teleopLowBarAch="Failed";}
+                            if (theDefense == "Portcullis (A)" && ($scope.teams.teleopPortcullisAch != "Crossed" && $scope.teams.teleopPortcullisAch != "Reached")) {$scope.teams.teleopPortcullisAch="Failed";}
+                            if (theDefense == "Cheval de Frise (A)" && ($scope.teams.teleopChevalDeFriseAch != "Crossed" && $scope.teams.teleopChevalDeFriseAch != "Reached")) {$scope.teams.teleopChevalDeFriseAch="Failed";}
+                            if (theDefense == "Moat (B)" && ($scope.teams.teleopMoatAch != "Crossed" && $scope.teams.teleopMoatAch != "Reached")) {$scope.teams.teleopMoatAch="Failed";}
+                            if (theDefense == "Ramparts (B)" && ($scope.teams.teleopRampartsAch != "Crossed" && $scope.teams.teleopRampartsAch != "Reached")) {$scope.teams.teleopRampartsAch="Failed";}
+                            if (theDefense == "Drawbridge (C)" && ($scope.teams.teleopDrawbridgeAch != "Crossed" && $scope.teams.teleopDrawbridgeAch != "Reached")) {$scope.teams.teleopDrawbridgeAch="Failed";}
+                            if (theDefense == "Sally Port (C)" && ($scope.teams.teleopSallyPortAch != "Crossed" && $scope.teams.teleopSallyPortAch != "Reached")) {$scope.teams.teleopSallyPortAch="Failed";}
+                            if (theDefense == "Rock Wall (D)" && ($scope.teams.teleopRockWallAch != "Crossed" && $scope.teams.teleopRockWallAch != "Reached")) {$scope.teams.teleopRockWallAch="Failed";}
+                            if (theDefense == "Rough Terrain (D)" && ($scope.teams.teleopRoughTerrainAch != "Crossed" && $scope.teams.teleopRoughTerrainAch != "Reached")) {$scope.teams.teleopRoughTerrainAch="Failed";}
 
                           }
 
-                          if (theDefense == "Low Bar") {$rootScope.teams.teleopLowBarAppearCount++;}
-                          if (theDefense == "Portcullis (A)") {$rootScope.teams.teleopPortcullisAppearCount++;}
-                          if (theDefense == "Cheval de Frise (A)") {$rootScope.teams.teleopChevalDeFriseAppearCount++;}
-                          if (theDefense == "Moat (B)") {$rootScope.teams.teleopMoatAppearCount++;}
-                          if (theDefense == "Ramparts (B)") {$rootScope.teams.teleopRampartsAppearCount++;}
-                          if (theDefense == "Drawbridge (C)") {$rootScope.teams.teleopDrawbridgeAppearCount++;}
-                          if (theDefense == "Sally Port (C)") {$rootScope.teams.teleopSallyPortAppearCount++;}
-                          if (theDefense == "Rock Wall (D)") {$rootScope.teams.teleopRockWallAppearCount++;}
-                          if (theDefense == "Rough Terrain (D)") {$rootScope.teams.teleopRoughTerrainAppearCount++;}
+                          if (theDefense == "Low Bar") {$scope.teams.teleopLowBarAppearCount++;}
+                          if (theDefense == "Portcullis (A)") {$scope.teams.teleopPortcullisAppearCount++;}
+                          if (theDefense == "Cheval de Frise (A)") {$scope.teams.teleopChevalDeFriseAppearCount++;}
+                          if (theDefense == "Moat (B)") {$scope.teams.teleopMoatAppearCount++;}
+                          if (theDefense == "Ramparts (B)") {$scope.teams.teleopRampartsAppearCount++;}
+                          if (theDefense == "Drawbridge (C)") {$scope.teams.teleopDrawbridgeAppearCount++;}
+                          if (theDefense == "Sally Port (C)") {$scope.teams.teleopSallyPortAppearCount++;}
+                          if (theDefense == "Rock Wall (D)") {$scope.teams.teleopRockWallAppearCount++;}
+                          if (theDefense == "Rough Terrain (D)") {$scope.teams.teleopRoughTerrainAppearCount++;}
 
                         }
 
-            $rootScope.teams.team = $rootScope.filter,
-            $rootScope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
-            $rootScope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
-            $rootScope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
-            $rootScope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
+            $scope.teams.team = $rootScope.filter,
+            $scope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
+            $scope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
+            $scope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
+            $scope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
 
-            $rootScope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
-            $rootScope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
-            $rootScope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
-            $rootScope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
+            $scope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
+            $scope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
+            $scope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
+            $scope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
 
-            $rootScope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
-            $rootScope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
+            $scope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
+            $scope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
 
             if ($scope.pull[i].teleop.towerAttack.towerLabel == "Defended")
             {
-              $rootScope.teams.teleopTowerAttackFailCount++;
+              $scope.teams.teleopTowerAttackFailCount++;
             }
             else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
             {
-              $rootScope.teams.teleopTowerAttackChallengeCount++;
+              $scope.teams.teleopTowerAttackChallengeCount++;
             }
             else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
             {
-              $rootScope.teams.teleopTowerAttackScaleCount++;
+              $scope.teams.teleopTowerAttackScaleCount++;
             }
 
-            $rootScope.teams.totalTotalScore += $scope.pull[i].totalscore;
+            $scope.teams.totalTotalScore += $scope.pull[i].totalscore;
 
             if ($scope.pull[i].botType = "Courtyard")
             {
-              $rootScope.teams.timesStartCourtyard++;
+              $scope.teams.timesStartCourtyard++;
             }
             else if ($scope.pull[i].botType = "Auto Zone")
             {
-              $rootScope.teams.timesStartAutoZone++;
+              $scope.teams.timesStartAutoZone++;
             }
             else if ($scope.pull[i].botType = "Spy Start")
             {
-              $rootScope.teams.timesStartSpyStart++;
+              $scope.teams.timesStartSpyStart++;
             }
 
-            $rootScope.teams.totalGameCount++;
+            $scope.teams.totalGameCount++;
 
-            $rootScope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
-            $rootScope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
+            $scope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
+            $scope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
           }
 
           $scope.refreshed = true;
 
         }
 
-        $rootScope.teams.autoLowBallAverage = $rootScope.teams.autoLowBallTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.autoHighBallAverage = $rootScope.teams.autoHighBallTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.autoLowBallAverage = $scope.teams.autoLowBallTotal/$scope.teams.totalGameCount;
+        $scope.teams.autoHighBallAverage = $scope.teams.autoHighBallTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopLowBallAverage = $rootScope.teams.teleopLowBallTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopHighBallAverage = $rootScope.teams.teleopHighBallTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.teleopLowBallAverage = $scope.teams.teleopLowBallTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopHighBallAverage = $scope.teams.teleopHighBallTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.autoLowShotAverage = $rootScope.teams.autoLowShotTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.autoHighShotAverage = $rootScope.teams.autoHighShotTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.autoLowShotAverage = $scope.teams.autoLowShotTotal/$scope.teams.totalGameCount;
+        $scope.teams.autoHighShotAverage = $scope.teams.autoHighShotTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopLowShotAverage = $rootScope.teams.teleopLowShotTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopHighShotAverage = $rootScope.teams.teleopHighShotTotal/$rootScope.teams.totalGameCount;
+        $scope.teams.teleopLowShotAverage = $scope.teams.teleopLowShotTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopHighShotAverage = $scope.teams.teleopHighShotTotal/$scope.teams.totalGameCount;
 
-        $rootScope.teams.teleopTotalDamageAverage = $rootScope.teams.teleopTotalDamageTotal/$rootScope.teams.totalGameCount;
-        $rootScope.teams.teleopCycleTimeAverage = $rootScope.teams.teleopCycleTimeTotal/$rootScope.teams.totalGameCount/100;
+        $scope.teams.teleopTotalDamageAverage = $scope.teams.teleopTotalDamageTotal/$scope.teams.totalGameCount;
+        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/$scope.teams.totalGameCount/100;
 
-        $rootScope.teams.overallAccuracy = ($rootScope.teams.autoLowBallTotal +
-                                            $rootScope.teams.autoHighBallTotal +
-                                            $rootScope.teams.teleopLowBallTotal +
-                                            $rootScope.teams.teleopHighBallTotal)/
-                                           ($rootScope.teams.teleopHighShotTotal +
-                                            $rootScope.teams.teleopLowShotTotal +
-                                            $rootScope.teams.autoHighShotTotal +
-                                            $rootScope.teams.autoLowShotTotal)*100;
+        $scope.teams.overallAccuracy = ($scope.teams.autoLowBallTotal +
+                                            $scope.teams.autoHighBallTotal +
+                                            $scope.teams.teleopLowBallTotal +
+                                            $scope.teams.teleopHighBallTotal)/
+                                           ($scope.teams.teleopHighShotTotal +
+                                            $scope.teams.teleopLowShotTotal +
+                                            $scope.teams.autoHighShotTotal +
+                                            $scope.teams.autoLowShotTotal)*100;
 
-        $rootScope.teams.averageTotalScore = $rootScope.teams.totalTotalScore/$rootScope.teams.totalGameCount;
+        $scope.teams.averageTotalScore = $scope.teams.totalTotalScore/$scope.teams.totalGameCount;
 
         console.log("Success!");
 
         if (filterStat == "Avg Score Contribution")
         {
-          $rootScope.teams.filterVarStat = $rootScope.teams.averageTotalScore;
+          $scope.teams.filterVarStat = $scope.teams.averageTotalScore;
         }
         else if (filterStat == "Avg Cycle Time")
         {
-          $rootScope.teams.filterVarStat = $rootScope.teams.teleopCycleTimeAverage;
+          $scope.teams.filterVarStat = $scope.teams.teleopCycleTimeAverage;
         }
         else if (filterStat == "Overall Accuracy")
         {
-          $rootScope.teams.filterVarStat = $rootScope.teams.overallAccuracy;
+          $scope.teams.filterVarStat = $scope.teams.overallAccuracy;
         }
 
-        $scope.allStats.push($rootScope.teams);
+        $scope.allStats.push($scope.teams);
 
         }
 
