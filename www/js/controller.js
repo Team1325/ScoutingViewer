@@ -11,7 +11,7 @@ angular.module('starter.controllers', ['ionic'])
 .controller('ListCtrl', ['$scope', '$state', '$http', '$rootScope', '$filter', function($scope, $state, $http, $rootScope, $filter) {
 
     $scope.filterType = "View All";
-    $scope.orderType = "Date Uploaded";
+    $scope.orderType = "Index Value";
     $scope.pull = [];
     $scope.matches = [];
     $scope.refreshed = false;
@@ -57,12 +57,14 @@ angular.module('starter.controllers', ['ionic'])
               $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
             }
 
+            var passed = false;
+
             if ($rootScope.filterType == "Team Number")
             {
               if ($scope.pull[i].team == $rootScope.filter)
               {
                 $scope.matches.push($scope.pull[i]);
-                $scope.matches[i].indexValue = i;
+                passed = true;
               }
             }
             else if ($rootScope.filterType == "Scouter")
@@ -70,7 +72,7 @@ angular.module('starter.controllers', ['ionic'])
               if ($scope.pull[i].scouter == $rootScope.filter)
               {
                 $scope.matches.push($scope.pull[i]);
-                $scope.matches[i].indexValue = i;
+                passed = true;
               }
             }
             else if ($rootScope.filterType == "Match Number")
@@ -78,26 +80,30 @@ angular.module('starter.controllers', ['ionic'])
               if ($scope.pull[i].number == $rootScope.filter)
               {
                 $scope.matches.push($scope.pull[i]);
-                $scope.matches[i].indexValue = i;
+                passed = true;
               }
             }
-            else if ($rootScope.filterType == "Robot Type")
+            else if ($rootScope.filterType == "Robot Start")
             {
-              if ($scope.pull[i].robotType == $rootScope.filter)
+              if ($scope.pull[i].botType == $rootScope.filter)
               {
                 $scope.matches.push($scope.pull[i]);
-                $scope.matches[i].indexValue = i;
+                passed = true;
               }
             }
             else {
               $scope.matches.push($scope.pull[i]);
-              $scope.matches[i].indexValue = i;
+              passed = true;
+            }
 
+            if (passed==true)
+            {
+              if ($scope.matches[i]){$scope.matches[i].indexValue = i;}
             }
 
           }
 
-          if ($rootScope.orderType == "Date Uploaded")
+          if ($rootScope.orderType == "Index Value")
           {
             $rootScope.reverse = reverseOrder;
 
