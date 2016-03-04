@@ -406,15 +406,15 @@ angular.module('starter.controllers', ['ionic'])
 
             $scope.teams.totalTotalScore += $scope.pull[i].totalscore;
 
-            if ($scope.pull[i].botType = "Courtyard")
+            if ($scope.pull[i].botType == "Courtyard")
             {
               $scope.teams.timesStartCourtyard++;
             }
-            else if ($scope.pull[i].botType = "Auto Zone")
+            else if ($scope.pull[i].botType == "Auto Zone")
             {
               $scope.teams.timesStartAutoZone++;
             }
-            else if ($scope.pull[i].botType = "Spy Start")
+            else if ($scope.pull[i].botType == "Spy Start")
             {
               $scope.teams.timesStartSpyStart++;
             }
