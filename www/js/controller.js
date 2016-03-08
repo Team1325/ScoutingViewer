@@ -931,37 +931,35 @@ angular.module('starter.controllers', ['ionic'])
   $scope.filter = "";
   $scope.reverse = false;
 
-  $scope.tableSize = "2800px"
-  $scope.tableSizeInt = 2800;
+  $scope.tableSize = "140px"
+  $scope.tableSizeInt = 140;
 
   $scope.reverseOrder = false;
 
-  $scope.viewRobotStart = true;
-  $scope.viewScouter = true;
+  $scope.viewRobotStart = false;
+  $scope.viewScouter = false;
 
-  $scope.viewAutoBalls = true;
-  $scope.viewAutoNotes = true;
+  $scope.viewAutoBalls = false;
+  $scope.viewAutoNotes = false;
 
-  $scope.viewTeleopBalls = true;
-  $scope.viewTeleopNotes = true;
+  $scope.viewTeleopBalls = false;
+  $scope.viewTeleopNotes = false;
 
-  $scope.viewTeleopTotalDamage = true;
-  $scope.viewTeleopCycleTime = true;
-  $scope.viewTeleopTowerAttack = true;
+  $scope.viewTeleopTotalDamage = false;
+  $scope.viewTeleopCycleTime = false;
+  $scope.viewTeleopTowerAttack = false;
 
-  $scope.viewTotalScore = true;
+  $scope.viewTotalScore = false;
 
-  $scope.viewLowBar = true;
-  $scope.viewPortcullis = true;
-  $scope.viewChevalDeFrise = true;
-  $scope.viewMoat = true;
-  $scope.viewRamparts = true;
-  $scope.viewDrawbridge = true;
-  $scope.viewSallyPort = true;
-  $scope.viewRockWall = true;
-  $scope.viewRoughTerrain = true;
-
-  $scope.switchAll = true;
+  $scope.viewLowBar = false;
+  $scope.viewPortcullis = false;
+  $scope.viewChevalDeFrise = false;
+  $scope.viewMoat = false;
+  $scope.viewRamparts = false;
+  $scope.viewDrawbridge = false;
+  $scope.viewSallyPort = false;
+  $scope.viewRockWall = false;
+  $scope.viewRoughTerrain = false;
 
 
   $scope.menu = function() {
