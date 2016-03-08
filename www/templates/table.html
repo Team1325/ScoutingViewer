@@ -1,0 +1,202 @@
+<ion-view title="Spreadsheet" hide-nav-bar="false">
+
+  <ion-nav-buttons side="left">
+    <button class="button button-clear button-positive" ng-click="menu()">
+      Menu
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+
+  </ion-nav-buttons>
+
+  <ion-content class="padding"  style="text-align: center;">
+
+    <form ng-submit="newFilter(filterVariable, reverseOrder)" name="filterForm">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Choose a Team..." ng-model="filterVariable">
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Refresh
+        </button>
+      </div>
+
+      <ion-toggle ng-model="reverseOrder" toggle-class="toggle-calm" style="text-align: left">Reverse:</ion-toggle>
+
+      <div class="item item-body">
+        <a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed" style="">View Information</a>
+      </div>
+      <table style="width:100%; text-align:center" ng-show="collapsed">
+        <tr>
+          <td style="width:50%"><ion-toggle ng-click="newWidth(viewScouter)"  ng-model="viewScouter" toggle-class="toggle-dark">Scouter</ion-toggle> </td>
+          <td style="width:50%"><ion-toggle ng-click="newWidth(viewRobotStart)" ng-model="viewRobotStart" toggle-class="toggle-dark">Start Position</ion-toggle> </td>
+          </tr>
+      </table>
+      <table style="width:100%; text-align:center" ng-show="collapsed">
+        <tr>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewAutoBalls)" ng-model="viewAutoBalls" toggle-class="toggle-energized">Auto Boulders</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewAutoNotes)" ng-model="viewAutoNotes" toggle-class="toggle-energized">Auto Notes</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTeleopBalls)" ng-model="viewTeleopBalls" toggle-class="toggle-positive">Teleop Boulders</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTeleopNotes)" ng-model="viewTeleopNotes" toggle-class="toggle-positive">Teleop Notes</ion-toggle> </td>
+        </tr>
+        <tr>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTeleopTotalDamage)" ng-model="viewTeleopTotalDamage" toggle-class="toggle-royal">Total Damage</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTeleopCycleTime)" ng-model="viewTeleopCycleTime" toggle-class="toggle-royal">Cycle Time</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTeleopTowerAttack)" ng-model="viewTeleopTowerAttack" toggle-class="toggle-royal">Tower Attack</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-click="newWidth(viewTotalScore)" ng-model="viewTotalScore" toggle-class="toggle-royal">Total Score</ion-toggle> </td>
+        </tr>
+      </table>
+      <table style="width:100%; text-align:center" ng-show="collapsed">
+        <tr>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewLowBar)" ng-model="viewLowBar" toggle-class="toggle-calm">Low Bar</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewPortcullis)" ng-model="viewPortcullis" toggle-class="toggle-calm">Portcullis</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewChevalDeFrise)" ng-model="viewChevalDeFrise" toggle-class="toggle-calm">Cheval de Frise</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewMoat)" ng-model="viewMoat" toggle-class="toggle-calm">Moat</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewRamparts)" ng-model="viewRamparts" toggle-class="toggle-calm">Ramparts</ion-toggle> </td>
+        </tr>
+        <tr>
+          <td></td>
+          <!-- <td style="width: 20%"><ion-toggle ng-click="switchAllDefenses(switchAll)" ng-model="switchAll" toggle-class="toggle-dark">Switch All</ion-toggle> </td> -->
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewDrawbridge)" ng-model="viewDrawbridge" toggle-class="toggle-calm">Drawbridge</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewSallyPort)" ng-model="viewSallyPort" toggle-class="toggle-calm">Sally Port</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewRockWall)" ng-model="viewRockWall" toggle-class="toggle-calm">Rock Wall</ion-toggle> </td>
+          <td style="width: 20%"><ion-toggle ng-click="newWidth(viewRoughTerrain)" ng-model="viewRoughTerrain" toggle-class="toggle-calm">Rough Terrain</ion-toggle> </td>
+        </tr>
+      </table>
+    </form>
+
+    <ion-scroll direction="x;y" style="width:100%">
+
+      <div class="row header" style="width:{{tableSize}}">
+        <div class="col padding" style="background-color: #000000;color: #FFFFFF">Match Number</div>
+        <div ng-show="viewScouter" class="col padding">Scouter</div>
+        <div ng-show="viewRobotStart" class="col padding" style="background-color: #99FF99">Start Position</div>
+        <div ng-show="viewAutoBalls" class="col padding" style="background-color: #FFFF99">Auto Boulders</div>
+        <div ng-show="viewTeleopBalls" class="col padding" style="background-color: #99CCFF">Teleop Boulders</div>
+        <div ng-show="viewTeleopTotalDamage" class="col padding" style="background-color: #99FFFF">Total Damage</div>
+        <div ng-show="viewTeleopCycleTime" class="col padding" style="background-color: #99FFFF">Cycle Time</div>
+        <div ng-show="viewTeleopTowerAttack" class="col padding" style="background-color: #99FFFF">Tower Attack</div>
+        <div ng-show="viewTotalScore" class="col padding" style="background-color: #CC99FF">Total Score</div>
+        <div ng-show="viewLowBar" class="col padding" style="background-color: #FF9999">Low Bar</div>
+        <div ng-show="viewPortcullis" class="col padding" style="background-color: #FF9999">Portcullis</div>
+        <div ng-show="viewChevalDeFrise" class="col padding" style="background-color: #FF9999">Cheval de Frise</div>
+        <div ng-show="viewMoat" class="col padding" style="background-color: #FF9999">Moat</div>
+        <div ng-show="viewRamparts" class="col padding" style="background-color: #FF9999">Ramparts</div>
+        <div ng-show="viewDrawbridge" class="col padding" style="background-color: #FF9999">Drawbridge</div>
+        <div ng-show="viewSallyPort" class="col padding" style="background-color: #FF9999">Sally Port</div>
+        <div ng-show="viewRockWall" class="col padding" style="background-color: #FF9999">Rock Wall</div>
+        <div ng-show="viewRoughTerrain" class="col padding" style="background-color: #FF9999">Rough Terrain</div>
+        <div ng-show="viewAutoNotes" class="col padding" style="background-color: #FFFF99">Auto Notes</div>
+        <div ng-show="viewTeleopNotes" class="col padding" style="background-color: #99CCFF">Teleop Notes</div>
+      </div>
+      <div class="row" style="width:{{tableSize}}" ng-repeat="match in orderedMatches">
+        <div class="col padding">
+          {{match.number}}<br>
+          <br>
+        </div>
+        <div ng-show="viewScouter" class="col padding">{{match.scouter}}</div>
+        <div ng-show="viewRobotStart" class="col padding">{{match.botType}}</div>
+        <div ng-show="viewAutoBalls" class="col padding">
+          Low Ball: <b>{{match.auto.lowBall}}/{{match.auto.lowShots}}</b> <br>
+          High Ball: <b>{{match.auto.highBall}}/{{match.auto.highShots}}</b>
+        </div>
+        <div ng-show="viewTeleopBalls" class="col padding">
+          Low Balls: <b>{{match.teleop.lowBall}}/{{match.teleop.lowShots}}</b> <br>
+          High Balls: <b>{{match.teleop.highBall}}/{{match.teleop.highShots}}</b>
+        </div>
+        <div ng-show="viewTeleopTotalDamage" class="col padding">{{match.teleop.totalDamage}}</div>
+        <div ng-show="viewTeleopCycleTime" class="col padding">{{match.teleop.cycleTime}}</div>
+        <div ng-show="viewTeleopTowerAttack" class="col padding">{{match.teleop.towerAttack.towerLabel}}</div>
+        <div ng-show="viewTotalScore" class="col padding">{{match.totalscore}}</div>
+        <div ng-show="viewLowBar" class="col padding">
+          <div ng-show="{{match.defenseLabel.lowBar}}">
+            Auto: {{match.defenseLabel.lowBarAuto}}<br>
+            Teleop: {{match.defenseLabel.lowBarTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.lowBar}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewPortcullis" class="col padding">
+          <div ng-show="{{match.defenseLabel.portcullis}}">
+            Auto: {{match.defenseLabel.portcullisAuto}}<br>
+            Teleop: {{match.defenseLabel.portcullisTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.portcullis}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewChevalDeFrise" class="col padding">
+          <div ng-show="{{match.defenseLabel.chevalDeFrise}}">
+            Auto: {{match.defenseLabel.chevalDeFriseAuto}}<br>
+            Teleop: {{match.defenseLabel.chevalDeFriseTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.chevalDeFrise}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewMoat" class="col padding">
+          <div ng-show="{{match.defenseLabel.moat}}">
+            Auto: {{match.defenseLabel.moatAuto}}<br>
+            Teleop: {{match.defenseLabel.moatTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.moat}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewRamparts" class="col padding">
+          <div ng-show="{{match.defenseLabel.ramparts}}">
+            Auto: {{match.defenseLabel.rampartsAuto}}<br>
+            Teleop: {{match.defenseLabel.rampartsTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.ramparts}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewDrawbridge" class="col padding">
+          <div ng-show="{{match.defenseLabel.drawbridge}}">
+            Auto: {{match.defenseLabel.drawbridgeAuto}}<br>
+            Teleop: {{match.defenseLabel.drawbridgeTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.drawbridge}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewSallyPort" class="col padding">
+          <div ng-show="{{match.defenseLabel.sallyPort}}">
+            Auto: {{match.defenseLabel.sallyPortAuto}}<br>
+            Teleop: {{match.defenseLabel.sallyPortTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.sallyPort}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewRockWall" class="col padding">
+          <div ng-show="{{match.defenseLabel.rockWall}}">
+            Auto: {{match.defenseLabel.rockWallAuto}}<br>
+            Teleop: {{match.defenseLabel.rockWallTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.rockWall}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewRoughTerrain" class="col padding">
+          <div ng-show="{{match.defenseLabel.roughTerrain}}">
+            Auto: {{match.defenseLabel.roughTerrainAuto}}<br>
+            Teleop: {{match.defenseLabel.roughTerrainTeleop}}
+          </div>
+          <div ng-show="!{{match.defenseLabel.roughTerrain}}">
+            N/A
+          </div>
+        </div>
+        <div ng-show="viewAutoNotes" class="col padding">{{match.autonotes}}</div>
+        <div ng-show="viewTeleopNotes" class="col padding">{{match.teleopnotes}}</div>
+      </div>
+
+    </ion-scroll>
+
+
+
+  </ion-content>
+</ion-view>

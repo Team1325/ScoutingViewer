@@ -1,15 +1,13 @@
 <ion-view title="List" hide-nav-bar="false">
 
   <ion-nav-buttons side="left">
-    <button class="button button-clear button-positive" ng-click="rankings()">
-      Rankings
+    <button class="button button-clear button-positive" ng-click="menu()">
+      Menu
     </button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button button-clear button-positive" ng-click="statistics()">
-      Statistics
-    </button>
+
   </ion-nav-buttons>
 
   <ion-content class="padding"  style="text-align: center;">
@@ -40,12 +38,43 @@
           Order By:
         </div>
         <select ng-model="orderType">
-          <option>Index Value</option>
           <option>Match Number</option>
           <option>Score Contribution</option>
         </select>
       </label>
+
       <ion-toggle ng-model="reverseOrder" toggle-class="toggle-calm" style="text-align: left">Reverse:</ion-toggle>
+
+      <div class="item item-body">
+        <a href="#" ng-model="collapsed" ng-click="collapsed=!collapsed" style="">View Information</a>
+      </div>
+      <table style="width:100%; text-align:center" ng-show="collapsed">
+        <tr>
+          <td style="width:50%"><ion-toggle ng-model="viewRobotStart" toggle-class="toggle-dark">Start Position</ion-toggle> </td>
+          <td style="width:50%"><ion-toggle ng-model="viewScouter" toggle-class="toggle-dark">Scouter</ion-toggle> </td>
+        </tr>
+      </table>
+      <table style="width:100%; text-align:center" ng-show="collapsed">
+        <tr>
+          <td style="width: 25%"><ion-toggle ng-model="viewAuto" toggle-class="toggle-assertive">Auto</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewAutoBalls" toggle-class="toggle-calm" ng-show="viewAuto">Auto Boulders</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewAutoDefenses" toggle-class="toggle-calm" ng-show="viewAuto">Auto Defenses</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewAutoNotes" toggle-class="toggle-calm" ng-show="viewAuto">Auto Notes</ion-toggle> </td>
+        </tr>
+        <tr>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleop" toggle-class="toggle-assertive">Teleop</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopBalls" toggle-class="toggle-calm" ng-show="viewTeleop">Teleop Boulders</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopDefenses" toggle-class="toggle-calm" ng-show="viewTeleop">Teleop Defenses</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopNotes" toggle-class="toggle-calm" ng-show="viewTeleop">Teleop Notes</ion-toggle> </td>
+        </tr>
+        <tr>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopTotalDamage" toggle-class="toggle-royal">Total Damage</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopCycleTime" toggle-class="toggle-royal">Cycle Time</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTeleopTowerAttack" toggle-class="toggle-royal">Tower Attack</ion-toggle> </td>
+          <td style="width: 25%"><ion-toggle ng-model="viewTotalScore" toggle-class="toggle-royal">Total Score</ion-toggle> </td>
+        </tr>
+      </table>
+
     </form>
 
 
@@ -56,73 +85,91 @@
 
             <div class="item item-divider item-text-wrap">
               Team {{match.team}} during Match {{match.number}} in Quadrant {{match.quadrant}}
-              </body>
             </div>
 
-            <div class = "item item-body">
+            <div class="item item-body" ng-show="viewRobotStart">
               Robot Start: <b>{{match.botType}}</b>
             </div>
 
-            <div class="item item-divider">
+            <div class="item item-divider" ng-show="viewAuto">
               Auto
             </div>
 
-            <div class="item item-body">
+            <div class="item item-body" ng-show="viewAuto">
 
-              Low Balls Scored: <b>{{match.auto.lowBall}}/{{match.auto.lowShots}}</b> <br>
-              High Balls Scored: <b>{{match.auto.highBall}}/{{match.auto.highShots}}</b> <br>
-              <br>
+              <div ng-show="viewAutoBalls">
+                Low Balls Scored: <b>{{match.auto.lowBall}}/{{match.auto.lowShots}}</b> <br>
+                High Balls Scored: <b>{{match.auto.highBall}}/{{match.auto.highShots}}</b> <br>
+              </div>
 
-              <div class="item item-body" style="font-size:70%">
+              <br ng-show="viewAutoDefenses">
 
-              1st Defense {{match.defenseOne}} <b>{{match.auto.definedDefensesAuto.firstDefenseLabel}}</b> <br>
-              2nd Defense {{match.defenseTwo}} <b>{{match.auto.definedDefensesAuto.secondDefenseLabel}}</b> <br>
-              3rd Defense {{match.defenseThree}} <b>{{match.auto.definedDefensesAuto.thirdDefenseLabel}}</b> <br>
-              4th Defense {{match.defenseFour}} <b>{{match.auto.definedDefensesAuto.fourthDefenseLabel}}</b> <br>
-              5th Defense {{match.defenseFive}} <b>{{match.auto.definedDefensesAuto.fifthDefenseLabel}}</b> <br>
+              <div class="item item-body" style="font-size:70%" ng-show="viewAutoDefenses">
+
+                1st Defense {{match.defenseOne}} <b>{{match.auto.definedDefensesAuto.firstDefenseLabel}}</b> <br>
+                2nd Defense {{match.defenseTwo}} <b>{{match.auto.definedDefensesAuto.secondDefenseLabel}}</b> <br>
+                3rd Defense {{match.defenseThree}} <b>{{match.auto.definedDefensesAuto.thirdDefenseLabel}}</b> <br>
+                4th Defense {{match.defenseFour}} <b>{{match.auto.definedDefensesAuto.fourthDefenseLabel}}</b> <br>
+                5th Defense {{match.defenseFive}} <b>{{match.auto.definedDefensesAuto.fifthDefenseLabel}}</b> <br>
 
               </div>
 
-              <br>
-              Notes: {{match.autonotes}}
+              <br ng-show="viewAutoNotes">
+
+              <div ng-show="viewAutoNotes">
+                Notes: {{match.autonotes}}
+              </div>
 
             </div>
 
-            <div class="item item-divider">
-            Teleop
+            <div class="item item-divider" ng-show="viewTeleop">
+              Teleop
             </div>
 
-            <div class="item item-body">
+            <div class="item item-body" ng-show="viewTeleop">
 
-              Low Balls Scored: <b>{{match.teleop.lowBall}}/{{match.teleop.lowShots}}</b> <br>
-              High Balls Scored: <b>{{match.teleop.highBall}}/{{match.teleop.highShots}}</b> <br>
-              <br>
+              <div ng-show="viewTeleopBalls">
+                Low Balls Scored: <b>{{match.teleop.lowBall}}/{{match.teleop.lowShots}}</b> <br>
+                High Balls Scored: <b>{{match.teleop.highBall}}/{{match.teleop.highShots}}</b> <br>
+              </div>
 
-              <div class="item item-body" style="font-size:70%">
+              <br ng-show="viewTeleopDefenses">
 
-              1st Defense {{match.defenseOne}} <b>{{match.teleop.definedDefensesTeleop.firstDefenseLabel}}</b> <br>
-              2nd Defense {{match.defenseTwo}} <b>{{match.teleop.definedDefensesTeleop.secondDefenseLabel}}</b> <br>
-              3rd Defense {{match.defenseThree}} <b>{{match.teleop.definedDefensesTeleop.thirdDefenseLabel}}</b> <br>
-              4th Defense {{match.defenseFour}} <b>{{match.teleop.definedDefensesTeleop.fourthDefenseLabel}}</b> <br>
-              5th Defense {{match.defenseFive}} <b>{{match.teleop.definedDefensesTeleop.fifthDefenseLabel}}</b> <br>
+              <div class="item item-body" style="font-size:70%" ng-show="viewTeleopDefenses">
+
+                1st Defense {{match.defenseOne}} <b>{{match.teleop.definedDefensesTeleop.firstDefenseLabel}}</b> <br>
+                2nd Defense {{match.defenseTwo}} <b>{{match.teleop.definedDefensesTeleop.secondDefenseLabel}}</b> <br>
+                3rd Defense {{match.defenseThree}} <b>{{match.teleop.definedDefensesTeleop.thirdDefenseLabel}}</b> <br>
+                4th Defense {{match.defenseFour}} <b>{{match.teleop.definedDefensesTeleop.fourthDefenseLabel}}</b> <br>
+                5th Defense {{match.defenseFive}} <b>{{match.teleop.definedDefensesTeleop.fifthDefenseLabel}}</b> <br>
 
               </div>
 
-              <br>
+              <br ng-show="viewTeleopNotes">
+
+              <div ng-show="viewTeleopNotes">
+                Notes: {{match.teleopnotes}}
+              </div>
+
+            </div>
+
+            <div class="item item-divider" ng-show="viewTeleopTotalDamage">
               Total Damage: <b>{{match.teleop.totalDamage}}</b> <br>
-              Cycle Time: <b>{{match.teleop.cycleTime}}</b> <br>
-              <br>
-              Tower Attack: <b>{{match.teleop.towerAttack.towerLabel}}</b> <br>
-              <br>
-              Notes: {{match.teleopnotes}}
-
             </div>
 
-            <div class="item item-divider">
+            <div class="item item-divider" ng-show="viewTeleopCycleTime">
+              Cycle Time: <b>{{match.teleop.cycleTime}}</b> <br>
+            </div>
+
+            <div class="item item-divider" ng-show="viewTeleopTowerAttack">
+              Tower Attack: <b>{{match.teleop.towerAttack.towerLabel}}</b> <br>
+            </div>
+
+            <div class="item item-divider" ng-show="viewTotalScore">
               Total Score: {{match.totalscore}}
             </div>
 
-            <div class="item item-divider">
+            <div class="item item-divider" ng-show="viewScouter">
               Scouter: {{match.scouter}}
             </div>
 

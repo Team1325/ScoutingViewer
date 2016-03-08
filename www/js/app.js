@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic','starter.controllers', 'firebase'])
+angular.module('starter', ['ionic','starter.controllers'])
 
 .run(function($ionicPlatform, $rootScope) {
   $ionicPlatform.ready(function($scope, $rootScope) {
@@ -33,6 +33,13 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
       })
 
     $stateProvider
+      .state('menu', {
+        url: '/menu',
+        templateUrl: 'templates/menu.html',
+        controller: 'MenuCtrl'
+      })
+
+    $stateProvider
       .state('list', {
         url: '/list',
         templateUrl: 'templates/list.html',
@@ -53,9 +60,16 @@ angular.module('starter', ['ionic','starter.controllers', 'firebase'])
         controller: 'RankingsCtrl'
       })
 
+    $stateProvider
+      .state('table', {
+        url: '/table',
+        templateUrl: 'templates/table.html',
+        controller: 'TableCtrl'
+      })
+
 
 
     // defaults URL/state to the splash screen (first screen)
 
     $urlRouterProvider.otherwise('/splash');
-});
+})

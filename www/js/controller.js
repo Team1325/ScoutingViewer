@@ -1,9 +1,91 @@
 angular.module('starter.controllers', ['ionic'])
 
-.controller('SplashCtrl', ['$scope', '$state', function($scope, $state) {
+.controller('SplashCtrl', ['$scope', '$state', '$rootScope', '$http', '$interval', function($scope, $state, $rootScope, $http, $interval) {
+
+  $rootScope.pull = [];
+
+  $scope.showButton = true;
+
+  $scope.pulling = "Pulling data from scouting server";
+
+  $rootScope.pullInterval = $interval(function(){
+
+    if ($scope.pulling == "Pulling data from scouting server...")
+    {
+      $scope.pulling = "Pulling data from scouting server";
+    }
+    else
+    {
+      $scope.pulling += ".";
+    }
+
+  },500,0);
 
   $scope.next = function() {
+
+    $scope.showButton = false;
+
+    console.log("Processing - Received Action");
+    console.log("Processing - Pulling Data");
+
+    $http.get("http://scoutingserver.herokuapp.com/api/matches")
+
+      .success(function(data) {
+
+          console.log("Processing - Data Pulled");
+          console.log("Processing - Processing Data");
+
+          $rootScope.pull = data;
+
+          for (i = 0; i < $rootScope.pull.length; i++) {
+
+            if ($rootScope.pull[i].teleop)
+            {
+              $rootScope.pull[i].teleop = JSON.parse($rootScope.pull[i].teleop);
+            }
+            if ($rootScope.pull[i].auto)
+            {
+              $rootScope.pull[i].auto = JSON.parse($rootScope.pull[i].auto);
+            }
+
+            $rootScope.pull[i].teleop.cycleTime /= 100;
+
+          }
+
+          console.log("Process Complete!");
+
+          $scope.showButton = true;
+
+          $state.go('menu');
+
+        });
+
+      //
+
+  }
+
+}])
+
+.controller('MenuCtrl', ['$scope', '$state', '$rootScope', '$http', '$interval', function($scope, $state, $rootScope, $http, $interval) {
+
+  $scope.list = function(){
     $state.go('list');
+  }
+
+  $scope.ranks = function(){
+    $state.go('rankings');
+  }
+
+  $scope.stats = function(){
+    $state.go('statistics');
+  }
+
+  $scope.table = function(){
+    $state.go('table');
+  }
+
+  $scope.reload = function(){
+    $state.go('splash');
   }
 
 }])
@@ -11,8 +93,7 @@ angular.module('starter.controllers', ['ionic'])
 .controller('ListCtrl', ['$scope', '$state', '$http', '$rootScope', '$filter', function($scope, $state, $http, $rootScope, $filter) {
 
     $scope.filterType = "View All";
-    $scope.orderType = "Index Value";
-    $scope.pull = [];
+    $scope.orderType = "Match Number";
     $scope.matches = [];
     $scope.refreshed = false;
     $rootScope.filter = "";
@@ -20,6 +101,30 @@ angular.module('starter.controllers', ['ionic'])
     $rootScope.orderType = "";
     $rootScope.reverse = false;
     $scope.reverseOrder = false;
+
+
+    $scope.viewRobotStart = true;
+    $scope.viewScouter = true;
+
+    $scope.viewAuto = true;
+    $scope.viewAutoBalls = true;
+    $scope.viewAutoDefenses = true;
+    $scope.viewAutoNotes = true;
+
+    $scope.viewTeleop = true;
+    $scope.viewTeleopBalls = true;
+    $scope.viewTeleopDefenses = true;
+    $scope.viewTeleopNotes = true;
+
+    $scope.viewTeleopTotalDamage = true;
+    $scope.viewTeleopCycleTime = true;
+    $scope.viewTeleopTowerAttack = true;
+
+    $scope.viewTotalScore = true;
+
+    $scope.menu = function() {
+      $state.go('menu');
+    }
 
     $scope.newFilter = function(filterVar,filterSelection,orderSelection,reverseOrder){
 
@@ -34,89 +139,48 @@ angular.module('starter.controllers', ['ionic'])
       console.log("Ordering By: " + $rootScope.orderType);
       console.log("Reverse: " + reverseOrder);
 
-      $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-        .success(function(data) {
-
-          $scope.pull = [];
           $scope.matches = [];
           $scope.orderedMatches = [];
 
-          $scope.pull = data;
+          console.log("Number of Entries: " + $rootScope.pull.length);
 
-          console.log("Number of Entries: " + $scope.pull.length);
-
-          for (i = 0; i < $scope.pull.length; i++) {
-
-            if ($scope.pull[i].teleop)
-            {
-              $scope.pull[i].teleop = JSON.parse($scope.pull[i].teleop);
-            }
-            if ($scope.pull[i].auto)
-            {
-              $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
-            }
-
-            var passed = false;
+          for (i = 0; i < $rootScope.pull.length; i++) {
 
             if ($rootScope.filterType == "Team Number")
             {
-              if ($scope.pull[i].team == $rootScope.filter)
+              if ($rootScope.pull[i].team == $rootScope.filter)
               {
-                $scope.matches.push($scope.pull[i]);
-                passed = true;
+                $scope.matches.push($rootScope.pull[i]);
               }
             }
             else if ($rootScope.filterType == "Scouter")
             {
-              if ($scope.pull[i].scouter == $rootScope.filter)
+              if ($rootScope.pull[i].scouter == $rootScope.filter)
               {
-                $scope.matches.push($scope.pull[i]);
-                passed = true;
+                $scope.matches.push($rootScope.pull[i]);
               }
             }
             else if ($rootScope.filterType == "Match Number")
             {
-              if ($scope.pull[i].number == $rootScope.filter)
+              if ($rootScope.pull[i].number == $rootScope.filter)
               {
-                $scope.matches.push($scope.pull[i]);
-                passed = true;
+                $scope.matches.push($rootScope.pull[i]);
               }
             }
             else if ($rootScope.filterType == "Robot Start")
             {
-              if ($scope.pull[i].botType == $rootScope.filter)
+              if ($rootScope.pull[i].botType == $rootScope.filter)
               {
-                $scope.matches.push($scope.pull[i]);
-                passed = true;
+                $scope.matches.push($rootScope.pull[i]);
               }
             }
             else {
-              $scope.matches.push($scope.pull[i]);
-              passed = true;
-            }
-
-            if (passed==true)
-            {
-              if ($scope.matches[i]){$scope.matches[i].indexValue = i;}
+              $scope.matches.push($rootScope.pull[i]);
             }
 
           }
 
-          if ($rootScope.orderType == "Index Value")
-          {
-            $rootScope.reverse = reverseOrder;
-
-            $scope.orderedMatches = $scope.matches;
-
-            $scope.orderedMatches = $filter('orderBy')($scope.orderedMatches, "indexValue", $rootScope.reverse);
-            console.log("Ordered Matches:")
-            for (asd = 0; asd<$scope.orderedMatches.length; asd++)
-            {
-                console.log(JSON.stringify($scope.orderedMatches[asd].indexValue));
-            }
-          }
-          else if ($rootScope.orderType == "Match Number")
+          if ($rootScope.orderType == "Match Number")
           {
             $rootScope.reverse = reverseOrder;
 
@@ -146,17 +210,6 @@ angular.module('starter.controllers', ['ionic'])
 
           $scope.refreshed = true;
 
-        }
-      );
-
-    }
-
-
-    $scope.statistics = function() {
-      $state.go('statistics');
-    }
-    $scope.rankings = function() {
-      $state.go('rankings');
     }
 
 }])
@@ -166,8 +219,8 @@ angular.module('starter.controllers', ['ionic'])
   $scope.refreshed = false;
   $scope.notAvailable = " ";
 
-  $scope.list = function() {
-    $state.go('list');
+  $scope.menu = function() {
+    $state.go('menu');
   }
 
   $scope.newTeam = function(filterTeam) {
@@ -231,49 +284,32 @@ angular.module('starter.controllers', ['ionic'])
                           autoNotesCollection: [],
                           teleopNotesCollection: []}
 
-    $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-      .success(function(data) {
-
-        $scope.pull = [];
         $scope.matches = [];
-
-        $scope.pull = data;
-
-
 
         if (filterTeam)
         {
           $rootScope.filter = filterTeam;
         }
 
-        console.log("Number of Available Entries: " + $scope.pull.length);
+        var theUltimateCycleCount = 0;
 
-        for (i = 0; i < $scope.pull.length; i++) {
+        console.log("Number of Available Entries: " + $rootScope.pull.length);
 
-          if ($scope.pull[i].team == $rootScope.filter)
+        for (i = 0; i < $rootScope.pull.length; i++) {
+
+          if ($rootScope.pull[i].team == $rootScope.filter)
           {
-
-            if ($scope.pull[i].teleop)
-            {
-              $scope.pull[i].teleop = JSON.parse($scope.pull[i].teleop);
-            }
-            if ($scope.pull[i].auto)
-            {
-              $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
-            }
-
 
             for (time = 1; time<=5; time++)
                         {
                           var theDefense = "";
                           var theLabel = "";
 
-                          if (time == 1){theDefense = $scope.pull[i].defenseOne;theLabel = $scope.pull[i].auto.definedDefensesAuto.firstDefenseLabel;}
-                          if (time == 2){theDefense = $scope.pull[i].defenseTwo;theLabel = $scope.pull[i].auto.definedDefensesAuto.secondDefenseLabel;}
-                          if (time == 3){theDefense = $scope.pull[i].defenseThree;theLabel = $scope.pull[i].auto.definedDefensesAuto.thirdDefenseLabel;}
-                          if (time == 4){theDefense = $scope.pull[i].defenseFour;theLabel = $scope.pull[i].auto.definedDefensesAuto.fourthDefenseLabel;}
-                          if (time == 5){theDefense = $scope.pull[i].defenseFive;theLabel = $scope.pull[i].auto.definedDefensesAuto.fifthDefenseLabel;}
+                          if (time == 1){theDefense = $rootScope.pull[i].defenseOne;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.firstDefenseLabel;}
+                          if (time == 2){theDefense = $rootScope.pull[i].defenseTwo;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.secondDefenseLabel;}
+                          if (time == 3){theDefense = $rootScope.pull[i].defenseThree;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.thirdDefenseLabel;}
+                          if (time == 4){theDefense = $rootScope.pull[i].defenseFour;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.fourthDefenseLabel;}
+                          if (time == 5){theDefense = $rootScope.pull[i].defenseFive;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.fifthDefenseLabel;}
 
                           if (theLabel == "Crossed") {
 
@@ -332,11 +368,11 @@ angular.module('starter.controllers', ['ionic'])
                           var theDefense = "";
                           var theLabel = "";
 
-                          if (time2 == 1){theDefense = $scope.pull[i].defenseOne;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.firstDefenseLabel;}
-                          if (time2 == 2){theDefense = $scope.pull[i].defenseTwo;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.secondDefenseLabel;}
-                          if (time2 == 3){theDefense = $scope.pull[i].defenseThree;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.thirdDefenseLabel;}
-                          if (time2 == 4){theDefense = $scope.pull[i].defenseFour;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.fourthDefenseLabel;}
-                          if (time2 == 5){theDefense = $scope.pull[i].defenseFive;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.fifthDefenseLabel;}
+                          if (time2 == 1){theDefense = $rootScope.pull[i].defenseOne;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.firstDefenseLabel;}
+                          if (time2 == 2){theDefense = $rootScope.pull[i].defenseTwo;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.secondDefenseLabel;}
+                          if (time2 == 3){theDefense = $rootScope.pull[i].defenseThree;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.thirdDefenseLabel;}
+                          if (time2 == 4){theDefense = $rootScope.pull[i].defenseFour;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.fourthDefenseLabel;}
+                          if (time2 == 5){theDefense = $rootScope.pull[i].defenseFive;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.fifthDefenseLabel;}
 
                           if (theLabel == "Crossed") {
 
@@ -378,51 +414,56 @@ angular.module('starter.controllers', ['ionic'])
                         }
 
             $scope.teams.team = $rootScope.filter,
-            $scope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
-            $scope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
-            $scope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
-            $scope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
+            $scope.teams.autoLowBallTotal +=$rootScope.pull[i].auto.lowBall;
+            $scope.teams.autoHighBallTotal +=$rootScope.pull[i].auto.highBall; // Convert to Averages
+            $scope.teams.autoLowShotTotal +=$rootScope.pull[i].auto.lowShots;
+            $scope.teams.autoHighShotTotal +=$rootScope.pull[i].auto.highShots;
 
-            $scope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
-            $scope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
-            $scope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
-            $scope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
+            $scope.teams.teleopLowBallTotal +=$rootScope.pull[i].teleop.lowBall;
+            $scope.teams.teleopHighBallTotal +=$rootScope.pull[i].teleop.highBall; // Convert to Averages
+            $scope.teams.teleopLowShotTotal +=$rootScope.pull[i].teleop.lowShots;
+            $scope.teams.teleopHighShotTotal +=$rootScope.pull[i].teleop.highShots;
 
-            $scope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
-            $scope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
+            $scope.teams.teleopTotalDamageTotal +=$rootScope.pull[i].teleop.totalDamage; // Convert to Averages
 
-            if ($scope.pull[i].teleop.towerAttack.towerLabel == "Defended")
+            if ($rootScope.pull[i].teleop.cycleTime != 0)
+            {
+              $scope.teams.teleopCycleTimeTotal +=$rootScope.pull[i].teleop.cycleTime; // Convert to Averages
+              theUltimateCycleCount++;
+            }
+
+            if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Defended")
             {
               $scope.teams.teleopTowerAttackFailCount++;
             }
-            else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
+            else if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
             {
               $scope.teams.teleopTowerAttackChallengeCount++;
             }
-            else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
+            else if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
             {
               $scope.teams.teleopTowerAttackScaleCount++;
             }
 
-            $scope.teams.totalTotalScore += $scope.pull[i].totalscore;
+            $scope.teams.totalTotalScore += $rootScope.pull[i].totalscore;
 
-            if ($scope.pull[i].botType == "Courtyard")
+            if ($rootScope.pull[i].botType == "Courtyard")
             {
               $scope.teams.timesStartCourtyard++;
             }
-            else if ($scope.pull[i].botType == "Auto Zone")
+            else if ($rootScope.pull[i].botType == "Auto Zone")
             {
               $scope.teams.timesStartAutoZone++;
             }
-            else if ($scope.pull[i].botType == "Spy Start")
+            else if ($rootScope.pull[i].botType == "Spy Start")
             {
               $scope.teams.timesStartSpyStart++;
             }
 
             $scope.teams.totalGameCount++;
 
-            $scope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
-            $scope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
+            $scope.teams.autoNotesCollection.push({notes: $rootScope.pull[i].autonotes, number: $rootScope.pull[i].number});
+            $scope.teams.teleopNotesCollection.push({notes: $rootScope.pull[i].teleopnotes, number: $rootScope.pull[i].number});
           }
 
           $scope.refreshed = true;
@@ -442,7 +483,7 @@ angular.module('starter.controllers', ['ionic'])
         $scope.teams.teleopHighShotAverage = $scope.teams.teleopHighShotTotal/$scope.teams.totalGameCount;
 
         $scope.teams.teleopTotalDamageAverage = $scope.teams.teleopTotalDamageTotal/$scope.teams.totalGameCount;
-        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/$scope.teams.totalGameCount/100;
+        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/theUltimateCycleCount/100;
 
         $scope.teams.overallAccuracy = ($scope.teams.autoLowBallTotal +
                                             $scope.teams.autoHighBallTotal +
@@ -462,30 +503,29 @@ angular.module('starter.controllers', ['ionic'])
           $scope.notAvailable = "Team not available! You can use these teams: ";
           $scope.listTeams = [];
 
-          $scope.listTeams.push($scope.pull[0].team);
-          $scope.notAvailable += $scope.pull[0].team;
+          $scope.listTeams.push($rootScope.pull[0].team);
+          $scope.notAvailable += $rootScope.pull[0].team;
 
           console.log ("Not available!");
-          for (check = 1; check < $scope.pull.length; check++) {
+          for (check = 1; check < $rootScope.pull.length; check++) {
             var add = true;
             if ($scope.listTeams.length>0)
             {
               for (doubleCheck = 0; doubleCheck < $scope.listTeams.length; doubleCheck++) {
-                if ($scope.pull[check].team == $scope.listTeams[doubleCheck] || !$scope.pull[check].team)
+                if ($rootScope.pull[check].team == $scope.listTeams[doubleCheck] || !$rootScope.pull[check].team)
                 {
                   add = false;
                 }
               }
             }
             if (add == true){
-              $scope.listTeams.push($scope.pull[check].team);
-              $scope.notAvailable += ", " + $scope.pull[check].team;
+              $scope.listTeams.push($rootScope.pull[check].team);
+              $scope.notAvailable += ", " + $rootScope.pull[check].team;
             }
           }
           console.log ($scope.notAvailable);
         }
 
-      });
   }
 
 }])
@@ -499,8 +539,8 @@ angular.module('starter.controllers', ['ionic'])
   $scope.reverseOrder = false;
   $scope.listTeams = [];
 
-  $scope.list = function() {
-    $state.go('list');
+  $scope.menu = function() {
+    $state.go('menu');
   }
 
   $scope.toggleGroup = function(group) {
@@ -513,34 +553,27 @@ angular.module('starter.controllers', ['ionic'])
 
   $scope.rankList = function(filterStat, reverseOrder) {
 
-    $http.get("http://scoutingserver.herokuapp.com/api/matches")
-
-      .success(function(data) {
-
         console.log("Filter: " + filterStat);
         console.log("Reverse: " + reverseOrder);
 
-        $scope.pull = [];
         $scope.matches = [];
-
-        $scope.pull = data;
 
         $scope.listTeams = [];
 
-        for (check = 0; check < $scope.pull.length; check++) {
+        for (check = 0; check < $rootScope.pull.length; check++) {
           var add = true;
           if ($scope.listTeams.length>0)
           {
             for (doubleCheck = 0; doubleCheck < $scope.listTeams.length; doubleCheck++) {
-              if ($scope.pull[check].team == $scope.listTeams[doubleCheck] || !$scope.pull[check].team)
+              if ($rootScope.pull[check].team == $scope.listTeams[doubleCheck] || !$rootScope.pull[check].team)
               {
                 add = false;
               }
             }
           }
           if (add == true){
-            $scope.listTeams.push($scope.pull[check].team);
-            console.log("Added Team: " + $scope.pull[check].team + " at: " + check);
+            $scope.listTeams.push($rootScope.pull[check].team);
+            console.log("Added Team: " + $rootScope.pull[check].team + " at: " + check);
           }
         }
 
@@ -619,24 +652,17 @@ angular.module('starter.controllers', ['ionic'])
           $rootScope.filter = theTeam;
         }
 
-        console.log("Number of Available Entries: " + $scope.pull.length);
+        console.log("Number of Available Entries: " + $rootScope.pull.length);
 
-        for (i = 0; i < $scope.pull.length; i++) {
+        var theCycleCount = 0;
+
+        for (i = 0; i < $rootScope.pull.length; i++) {
 
 
 
-          if ($scope.pull[i].team == $rootScope.filter)
+          if ($rootScope.pull[i].team == $rootScope.filter)
           {
             console.log("+++ New Entry! " + ($scope.teams.totalGameCount +1) + " +++")
-
-            if ($scope.pull[i].teleop)
-            {
-              $scope.pull[i].teleop = JSON.parse($scope.pull[i].teleop);
-            }
-            if ($scope.pull[i].auto)
-            {
-              $scope.pull[i].auto = JSON.parse($scope.pull[i].auto);
-            }
 
 
             for (time = 1; time<=5; time++)
@@ -644,11 +670,11 @@ angular.module('starter.controllers', ['ionic'])
                           var theDefense = "";
                           var theLabel = "";
 
-                          if (time == 1){theDefense = $scope.pull[i].defenseOne;theLabel = $scope.pull[i].auto.definedDefensesAuto.firstDefenseLabel;}
-                          if (time == 2){theDefense = $scope.pull[i].defenseTwo;theLabel = $scope.pull[i].auto.definedDefensesAuto.secondDefenseLabel;}
-                          if (time == 3){theDefense = $scope.pull[i].defenseThree;theLabel = $scope.pull[i].auto.definedDefensesAuto.thirdDefenseLabel;}
-                          if (time == 4){theDefense = $scope.pull[i].defenseFour;theLabel = $scope.pull[i].auto.definedDefensesAuto.fourthDefenseLabel;}
-                          if (time == 5){theDefense = $scope.pull[i].defenseFive;theLabel = $scope.pull[i].auto.definedDefensesAuto.fifthDefenseLabel;}
+                          if (time == 1){theDefense = $rootScope.pull[i].defenseOne;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.firstDefenseLabel;}
+                          if (time == 2){theDefense = $rootScope.pull[i].defenseTwo;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.secondDefenseLabel;}
+                          if (time == 3){theDefense = $rootScope.pull[i].defenseThree;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.thirdDefenseLabel;}
+                          if (time == 4){theDefense = $rootScope.pull[i].defenseFour;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.fourthDefenseLabel;}
+                          if (time == 5){theDefense = $rootScope.pull[i].defenseFive;theLabel = $rootScope.pull[i].auto.definedDefensesAuto.fifthDefenseLabel;}
 
                           if (theLabel == "Crossed") {
 
@@ -707,11 +733,11 @@ angular.module('starter.controllers', ['ionic'])
                           var theDefense = "";
                           var theLabel = "";
 
-                          if (time2 == 1){theDefense = $scope.pull[i].defenseOne;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.firstDefenseLabel;}
-                          if (time2 == 2){theDefense = $scope.pull[i].defenseTwo;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.secondDefenseLabel;}
-                          if (time2 == 3){theDefense = $scope.pull[i].defenseThree;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.thirdDefenseLabel;}
-                          if (time2 == 4){theDefense = $scope.pull[i].defenseFour;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.fourthDefenseLabel;}
-                          if (time2 == 5){theDefense = $scope.pull[i].defenseFive;theLabel = $scope.pull[i].teleop.definedDefensesTeleop.fifthDefenseLabel;}
+                          if (time2 == 1){theDefense = $rootScope.pull[i].defenseOne;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.firstDefenseLabel;}
+                          if (time2 == 2){theDefense = $rootScope.pull[i].defenseTwo;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.secondDefenseLabel;}
+                          if (time2 == 3){theDefense = $rootScope.pull[i].defenseThree;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.thirdDefenseLabel;}
+                          if (time2 == 4){theDefense = $rootScope.pull[i].defenseFour;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.fourthDefenseLabel;}
+                          if (time2 == 5){theDefense = $rootScope.pull[i].defenseFive;theLabel = $rootScope.pull[i].teleop.definedDefensesTeleop.fifthDefenseLabel;}
 
                           if (theLabel == "Crossed") {
 
@@ -753,51 +779,56 @@ angular.module('starter.controllers', ['ionic'])
                         }
 
             $scope.teams.team = $rootScope.filter,
-            $scope.teams.autoLowBallTotal +=$scope.pull[i].auto.lowBall;
-            $scope.teams.autoHighBallTotal +=$scope.pull[i].auto.highBall; // Convert to Averages
-            $scope.teams.autoLowShotTotal +=$scope.pull[i].auto.lowShots;
-            $scope.teams.autoHighShotTotal +=$scope.pull[i].auto.highShots;
+            $scope.teams.autoLowBallTotal +=$rootScope.pull[i].auto.lowBall;
+            $scope.teams.autoHighBallTotal +=$rootScope.pull[i].auto.highBall; // Convert to Averages
+            $scope.teams.autoLowShotTotal +=$rootScope.pull[i].auto.lowShots;
+            $scope.teams.autoHighShotTotal +=$rootScope.pull[i].auto.highShots;
 
-            $scope.teams.teleopLowBallTotal +=$scope.pull[i].teleop.lowBall;
-            $scope.teams.teleopHighBallTotal +=$scope.pull[i].teleop.highBall; // Convert to Averages
-            $scope.teams.teleopLowShotTotal +=$scope.pull[i].teleop.lowShots;
-            $scope.teams.teleopHighShotTotal +=$scope.pull[i].teleop.highShots;
+            $scope.teams.teleopLowBallTotal +=$rootScope.pull[i].teleop.lowBall;
+            $scope.teams.teleopHighBallTotal +=$rootScope.pull[i].teleop.highBall; // Convert to Averages
+            $scope.teams.teleopLowShotTotal +=$rootScope.pull[i].teleop.lowShots;
+            $scope.teams.teleopHighShotTotal +=$rootScope.pull[i].teleop.highShots;
 
-            $scope.teams.teleopTotalDamageTotal +=$scope.pull[i].teleop.totalDamage; // Convert to Averages
-            $scope.teams.teleopCycleTimeTotal +=$scope.pull[i].teleop.cycleTime; // Convert to Averages
+            $scope.teams.teleopTotalDamageTotal +=$rootScope.pull[i].teleop.totalDamage; // Convert to Averages
 
-            if ($scope.pull[i].teleop.towerAttack.towerLabel == "Defended")
+            if ($rootScope.pull[i].teleop.cycleTime != 0)
+            {
+              $scope.teams.teleopCycleTimeTotal +=$rootScope.pull[i].teleop.cycleTime; // Convert to Averages
+              theCycleCount++;
+            }
+
+            if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Defended")
             {
               $scope.teams.teleopTowerAttackFailCount++;
             }
-            else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
+            else if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Challenged")
             {
               $scope.teams.teleopTowerAttackChallengeCount++;
             }
-            else if ($scope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
+            else if ($rootScope.pull[i].teleop.towerAttack.towerLabel == "Scaled")
             {
               $scope.teams.teleopTowerAttackScaleCount++;
             }
 
-            $scope.teams.totalTotalScore += $scope.pull[i].totalscore;
+            $scope.teams.totalTotalScore += $rootScope.pull[i].totalscore;
 
-            if ($scope.pull[i].botType == "Courtyard")
+            if ($rootScope.pull[i].botType == "Courtyard")
             {
               $scope.teams.timesStartCourtyard++;
             }
-            else if ($scope.pull[i].botType == "Auto Zone")
+            else if ($rootScope.pull[i].botType == "Auto Zone")
             {
               $scope.teams.timesStartAutoZone++;
             }
-            else if ($scope.pull[i].botType == "Spy Start")
+            else if ($rootScope.pull[i].botType == "Spy Start")
             {
               $scope.teams.timesStartSpyStart++;
             }
 
             $scope.teams.totalGameCount++;
 
-            $scope.teams.autoNotesCollection.push({notes: $scope.pull[i].autonotes, number: $scope.pull[i].number});
-            $scope.teams.teleopNotesCollection.push({notes: $scope.pull[i].teleopnotes, number: $scope.pull[i].number});
+            $scope.teams.autoNotesCollection.push({notes: $rootScope.pull[i].autonotes, number: $rootScope.pull[i].number});
+            $scope.teams.teleopNotesCollection.push({notes: $rootScope.pull[i].teleopnotes, number: $rootScope.pull[i].number});
           }
 
           $scope.refreshed = true;
@@ -817,7 +848,7 @@ angular.module('starter.controllers', ['ionic'])
         $scope.teams.teleopHighShotAverage = $scope.teams.teleopHighShotTotal/$scope.teams.totalGameCount;
 
         $scope.teams.teleopTotalDamageAverage = $scope.teams.teleopTotalDamageTotal/$scope.teams.totalGameCount;
-        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/$scope.teams.totalGameCount/100;
+        $scope.teams.teleopCycleTimeAverage = $scope.teams.teleopCycleTimeTotal/theCycleCount/100;
 
         $scope.teams.overallAccuracy = ($scope.teams.autoLowBallTotal +
                                             $scope.teams.autoHighBallTotal +
@@ -887,8 +918,246 @@ angular.module('starter.controllers', ['ionic'])
         }
 
 
-      });
 
     }
+
+}])
+
+.controller('TableCtrl', ['$scope', '$state', '$http', '$rootScope', '$filter', function($scope, $state, $http, $rootScope, $filter) {
+
+  $scope.matches = [];
+  $scope.orderedMatches = [];
+
+  $scope.filter = "";
+  $scope.reverse = false;
+
+  $scope.tableSize = "2800px"
+  $scope.tableSizeInt = 2800;
+
+  $scope.reverseOrder = false;
+
+  $scope.viewRobotStart = true;
+  $scope.viewScouter = true;
+
+  $scope.viewAutoBalls = true;
+  $scope.viewAutoNotes = true;
+
+  $scope.viewTeleopBalls = true;
+  $scope.viewTeleopNotes = true;
+
+  $scope.viewTeleopTotalDamage = true;
+  $scope.viewTeleopCycleTime = true;
+  $scope.viewTeleopTowerAttack = true;
+
+  $scope.viewTotalScore = true;
+
+  $scope.viewLowBar = true;
+  $scope.viewPortcullis = true;
+  $scope.viewChevalDeFrise = true;
+  $scope.viewMoat = true;
+  $scope.viewRamparts = true;
+  $scope.viewDrawbridge = true;
+  $scope.viewSallyPort = true;
+  $scope.viewRockWall = true;
+  $scope.viewRoughTerrain = true;
+
+  $scope.switchAll = true;
+
+
+  $scope.menu = function() {
+    $state.go('menu');
+  }
+
+  $scope.newWidth = function(increase) {
+
+    if (increase)
+    {
+      $scope.tableSizeInt+=140;
+      $scope.tableSize = $scope.tableSizeInt + "px";
+    }
+    else
+    {
+      $scope.tableSizeInt-=140;
+      $scope.tableSize = $scope.tableSizeInt + "px";
+    }
+
+  }
+
+  // $scope.switchAllDefenses = function(theValue) {
+  //
+  //   $scope.viewLowBar = theValue;
+  //   $scope.newWidth($scope.viewLowBar);
+  //   $scope.viewPortcullis = theValue;
+  //   $scope.newWidth($scope.viewPortcullis);
+  //   $scope.viewChevalDeFrise = theValue;
+  //   $scope.newWidth($scope.viewChevalDeFrise);
+  //   $scope.viewMoat = theValue;
+  //   $scope.newWidth($scope.viewMoat);
+  //   $scope.viewRamparts = theValue;
+  //   $scope.newWidth($scope.viewRamparts);
+  //   $scope.viewDrawbridge = theValue;
+  //   $scope.newWidth($scope.viewDrawbridge);
+  //   $scope.viewSallyPort = theValue;
+  //   $scope.newWidth($scope.viewSallyPort);
+  //   $scope.viewRockWall = theValue;
+  //   $scope.newWidth($scope.viewRockWall);
+  //   $scope.viewRoughTerrain = theValue;
+  //   $scope.newWidth($scope.viewRoughTerrain);
+  //
+  // }
+
+  $scope.newFilter = function(team,reverse){
+
+    $scope.filter = team;
+    $scope.reverse = reverse;
+
+    console.log("Team: " + $scope.filter);
+
+    console.log("Reverse: " + $scope.reverse);
+
+    $scope.matches = [];
+    $scope.orderedMatches = [];
+
+    console.log("Number of Entries: " + $rootScope.pull.length);
+
+    for (i = 0; i < $rootScope.pull.length; i++) {
+
+      if ($rootScope.pull[i].team == $scope.filter)
+      {
+        $scope.matches.push($rootScope.pull[i]);
+      }
+
+    }
+
+    for (pos=0; pos< $scope.matches.length; pos++) {
+            $scope.matches[pos].defenseLabel = {
+
+              lowBar: false,
+              lowBarAuto: "N/A",
+              lowBarTeleop: "",
+
+              portcullis: false,
+              portcullisAuto: "N/A",
+              portcullisTeleop: "",
+
+              chevalDeFrise: false,
+              chevalDeFriseAuto: "N/A",
+              chevalDeFriseTeleop: "",
+
+              moat: false,
+              moatAuto: "N/A",
+              moatTeleop: "",
+
+              ramparts: false,
+              rampartsAuto: "N/A",
+              rampartsTeleop: "",
+
+              drawbridge: false,
+              drawbridgeAuto: "N/A",
+              drawbridgeTeleop: "",
+
+              sallyPort: false,
+              sallyPortAuto: "N/A",
+              sallyPortTeleop: "",
+
+              rockWall: false,
+              rockWallAuto: "N/A",
+              rockWallTeleop: "",
+
+              roughTerrain: false,
+              roughTerrainAuto: "N/A",
+              roughTerrainTeleop: ""
+
+            }
+
+            for (time = 1; time<=5; time++)
+            {
+
+              var theDefense = "";
+              var theAutoLabel = "";
+
+              if (time == 1){theDefense = $scope.matches[pos].defenseOne;theAutoLabel = $scope.matches[pos].auto.definedDefensesAuto.firstDefenseLabel;theTeleopLabel = $scope.matches[pos].teleop.definedDefensesTeleop.firstDefenseLabel;}
+              if (time == 2){theDefense = $scope.matches[pos].defenseTwo;theAutoLabel = $scope.matches[pos].auto.definedDefensesAuto.secondDefenseLabel;theTeleopLabel = $scope.matches[pos].teleop.definedDefensesTeleop.secondDefenseLabel;}
+              if (time == 3){theDefense = $scope.matches[pos].defenseThree;theAutoLabel = $scope.matches[pos].auto.definedDefensesAuto.thirdDefenseLabel;theTeleopLabel = $scope.matches[pos].teleop.definedDefensesTeleop.thirdDefenseLabel;}
+              if (time == 4){theDefense = $scope.matches[pos].defenseFour;theAutoLabel = $scope.matches[pos].auto.definedDefensesAuto.fourthDefenseLabel;theTeleopLabel = $scope.matches[pos].teleop.definedDefensesTeleop.fourthDefenseLabel;}
+              if (time == 5){theDefense = $scope.matches[pos].defenseFive;theAutoLabel = $scope.matches[pos].auto.definedDefensesAuto.fifthDefenseLabel;theTeleopLabel = $scope.matches[pos].teleop.definedDefensesTeleop.fifthDefenseLabel;}
+
+
+              if (theDefense == "Low Bar") {
+
+                $scope.matches[pos].defenseLabel.lowBar = true;
+                $scope.matches[pos].defenseLabel.lowBarAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.lowBarTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Portcullis (A)") {
+
+                $scope.matches[pos].defenseLabel.portcullis = true;
+                $scope.matches[pos].defenseLabel.portcullisAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.portcullisTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Cheval de Frise (A)") {
+
+                $scope.matches[pos].defenseLabel.chevalDeFrise = true;
+                $scope.matches[pos].defenseLabel.chevalDeFriseAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.chevalDeFriseTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Moat (B)") {
+
+                $scope.matches[pos].defenseLabel.moat = true;
+                $scope.matches[pos].defenseLabel.moatAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.moatTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Ramparts (B)") {
+
+                $scope.matches[pos].defenseLabel.ramparts = true;
+                $scope.matches[pos].defenseLabel.rampartsAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.rampartsTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Drawbridge (C)") {
+
+                $scope.matches[pos].defenseLabel.drawbridge = true;
+                $scope.matches[pos].defenseLabel.drawbridgeAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.drawbridgeTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Sally Port (C)") {
+
+                $scope.matches[pos].defenseLabel.sallyPort = true;
+                $scope.matches[pos].defenseLabel.sallyPortAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.sallyPortTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Rock Wall (D)") {
+
+                $scope.matches[pos].defenseLabel.rockWall = true;
+                $scope.matches[pos].defenseLabel.rockWallAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.rockWallTeleop = theTeleopLabel;
+
+              }
+              if (theDefense == "Rough Terrain (D)") {
+
+                $scope.matches[pos].defenseLabel.roughTerrain = true;
+                $scope.matches[pos].defenseLabel.roughTerrainAuto = theAutoLabel;
+                $scope.matches[pos].defenseLabel.roughTerrainTeleop = theTeleopLabel;
+
+              }
+            }
+    }
+
+    $scope.orderedMatches = $scope.matches;
+    $scope.orderedMatches = $filter('orderBy')($scope.orderedMatches, "number", $scope.reverse);
+
+    console.log("Ordered Matches:")
+    for (asd = 0; asd<$scope.orderedMatches.length; asd++)
+    {
+      console.log(JSON.stringify($scope.orderedMatches[asd].number));
+    }
+
+  }
 
 }])
