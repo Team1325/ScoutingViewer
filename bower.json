@@ -1,12 +1,10 @@
 {
-  "name": "Voluntold",
+  "name": "scoutingviewer",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0-rc.5"
   },
   "dependencies": {
-    "angular-chart.js": "^0.8.8",
-    "Chart.js": "^1.0.2",
-    "angular-fusioncharts": "^0.0.2"
+
   }
 }

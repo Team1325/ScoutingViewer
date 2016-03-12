@@ -1,7 +1,8 @@
 {
-  "name": "voluntold",
-  "version": "1.0.0",
-  "description": "Voluntold: An Ionic project",
+  "name": "scoutingviewer",
+  "version": "1.0.1",
+  "description": "Team1325 Inverse Paradox",
+  "private": true,
   "dependencies": {
     "express": "^4.13.4",
     "gulp": "^3.5.6",
@@ -23,5 +24,9 @@
   "cordovaPlatforms": [
     "ios",
     "android"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Team1325/ScoutingViewer.git"
+  }
 }
