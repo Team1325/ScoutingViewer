@@ -1,0 +1,271 @@
+<ion-view title="Alliance" hide-nav-bar="false">
+
+  <ion-nav-buttons side="left">
+    <button class="button button-clear button-positive" ng-click="menu()">
+      Menu
+    </button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+
+  </ion-nav-buttons>
+
+  <ion-content class="padding" style="text-align: center;">
+
+    <form ng-submit="newTeam(filterTeamOne, 1)" name="filterFormOne">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Select First Team..." ng-model="filterTeamOne" required>
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <form ng-submit="newTeam(filterTeamTwo, 2)" name="filterFormTwo">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Select Second Team..." ng-model="filterTeamTwo" required>
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <form ng-submit="newTeam(filterTeamThree, 3)" name="filterFormThree">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Select Third Team..." ng-model="filterTeamThree" required>
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <br>
+
+    <label>
+      {{notAvailable}}
+    </label>
+
+
+    <div class="row header" style="width: 100%">
+      <div class="col padding" style="background-color: #000000;color: #FFFFFF">Alliance</div>
+      <div class="col padding">First Team: {{teamsOne.team}}</div>
+      <div class="col padding">Second Team: {{teamsTwo.team}}</div>
+      <div class="col padding">Third Team: {{teamsThree.team}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FF99">Games Played</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.totalGameCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.totalGameCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.totalGameCount}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FFFF99">Avg Auto Boulders</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsOne.autoLowBallAverage | number:2}}/{{teamsOne.autoLowShotAverage | number:2}} <br>
+        High: {{teamsOne.autoHighBallAverage | number:2}}/{{teamsOne.autoHighShotAverage | number:2}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsTwo.autoLowBallAverage | number:2}}/{{teamsTwo.autoLowShotAverage | number:2}} <br>
+        High: {{teamsTwo.autoHighBallAverage | number:2}}/{{teamsTwo.autoHighShotAverage | number:2}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsThree.autoLowBallAverage | number:2}}/{{teamsThree.autoLowShotAverage | number:2}} <br>
+        High: {{teamsThree.autoHighBallAverage | number:2}}/{{teamsThree.autoHighShotAverage | number:2}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99CCFF">Avg Teleop Boulders</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsOne.teleopLowBallAverage | number:2}}/{{teamsOne.teleopLowShotAverage | number:2}} <br>
+        High: {{teamsOne.teleopHighBallAverage | number:2}}/{{teamsOne.teleopHighShotAverage | number:2}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsTwo.teleopLowBallAverage | number:2}}/{{teamsTwo.teleopLowShotAverage | number:2}} <br>
+        High: {{teamsTwo.teleopHighBallAverage | number:2}}/{{teamsTwo.teleopHighShotAverage | number:2}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Low: {{teamsThree.teleopLowBallAverage | number:2}}/{{teamsThree.teleopLowShotAverage | number:2}} <br>
+        High: {{teamsThree.teleopHighBallAverage | number:2}}/{{teamsThree.teleopHighShotAverage | number:2}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FFFF">Avg Total Damage to Defenses</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.teleopTotalDamageAverage | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.teleopTotalDamageAverage | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.teleopTotalDamageAverage | number:2}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FFFF">Avg Cycle Time (Seconds)</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.teleopCycleTimeAverage | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.teleopCycleTimeAverage | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.teleopCycleTimeAverage | number:2}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FFFF">Tower Fail Count</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.teleopTowerAttackFailCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.teleopTowerAttackFailCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.teleopTowerAttackFailCount}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FFFF">Tower Challenge Count</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.teleopTowerAttackChallengeCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.teleopTowerAttackChallengeCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.teleopTowerAttackChallengeCount}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #99FFFF">Tower Scale Count</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.teleopTowerAttackScaleCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.teleopTowerAttackScaleCount}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.teleopTowerAttackScaleCount}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #CC99FF">Avg Total Score</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsOne.averageTotalScore | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsTwo.averageTotalScore | number:2}}</div>
+      <div class="col padding" style="background-color: #FFFFFF">{{teamsThree.averageTotalScore | number:2}}</div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Low Bar</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoLowBarAch}} -> {{teamsOne.autoLowBarCrossCount}}/{{teamsOne.autoLowBarAppearCount}}<br>
+        Teleop: {{teamsOne.teleopLowBarAch}} -> {{teamsOne.teleopLowBarCrossCount}}/{{teamsOne.teleopLowBarAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoLowBarAch}} -> {{teamsTwo.autoLowBarCrossCount}}/{{teamsTwo.autoLowBarAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopLowBarAch}} -> {{teamsTwo.teleopLowBarCrossCount}}/{{teamsTwo.teleopLowBarAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoLowBarAch}} -> {{teamsThree.autoLowBarCrossCount}}/{{teamsThree.autoLowBarAppearCount}}<br>
+        Teleop: {{teamsThree.teleopLowBarAch}} -> {{teamsThree.teleopLowBarCrossCount}}/{{teamsThree.teleopLowBarAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Portcullis</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoPortcullisAch}} -> {{teamsOne.autoPortcullisCrossCount}}/{{teamsOne.autoPortcullisAppearCount}}<br>
+        Teleop: {{teamsOne.teleopPortcullisAch}} -> {{teamsOne.teleopPortcullisCrossCount}}/{{teamsOne.teleopPortcullisAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoPortcullisAch}} -> {{teamsTwo.autoPortcullisCrossCount}}/{{teamsTwo.autoPortcullisAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopPortcullisAch}} -> {{teamsTwo.teleopPortcullisCrossCount}}/{{teamsTwo.teleopPortcullisAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoPortcullisAch}} -> {{teamsThree.autoPortcullisCrossCount}}/{{teamsThree.autoPortcullisAppearCount}}<br>
+        Teleop: {{teamsThree.teleopPortcullisAch}} -> {{teamsThree.teleopPortcullisCrossCount}}/{{teamsThree.teleopPortcullisAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Cheval de Frise</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoChevalDeFriseAch}} -> {{teamsOne.autoChevalDeFriseCrossCount}}/{{teamsOne.autoChevalDeFriseAppearCount}}<br>
+        Teleop: {{teamsOne.teleopChevalDeFriseAch}} -> {{teamsOne.teleopChevalDeFriseCrossCount}}/{{teamsOne.teleopChevalDeFriseAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoChevalDeFriseAch}} -> {{teamsTwo.autoChevalDeFriseCrossCount}}/{{teamsTwo.autoChevalDeFriseAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopChevalDeFriseAch}} -> {{teamsTwo.teleopChevalDeFriseCrossCount}}/{{teamsTwo.teleopChevalDeFriseAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoChevalDeFriseAch}} -> {{teamsThree.autoChevalDeFriseCrossCount}}/{{teamsThree.autoChevalDeFriseAppearCount}}<br>
+        Teleop: {{teamsThree.teleopChevalDeFriseAch}} -> {{teamsThree.teleopChevalDeFriseCrossCount}}/{{teamsThree.teleopChevalDeFriseAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Moat</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoMoatAch}} -> {{teamsOne.autoMoatCrossCount}}/{{teamsOne.autoMoatAppearCount}}<br>
+        Teleop: {{teamsOne.teleopMoatAch}} -> {{teamsOne.teleopMoatCrossCount}}/{{teamsOne.teleopMoatAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoMoatAch}} -> {{teamsTwo.autoMoatCrossCount}}/{{teamsTwo.autoMoatAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopMoatAch}} -> {{teamsTwo.teleopMoatCrossCount}}/{{teamsTwo.teleopMoatAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoMoatAch}} -> {{teamsThree.autoMoatCrossCount}}/{{teamsThree.autoMoatAppearCount}}<br>
+        Teleop: {{teamsThree.teleopMoatAch}} -> {{teamsThree.teleopMoatCrossCount}}/{{teamsThree.teleopMoatAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Ramparts</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoRampartsAch}} -> {{teamsOne.autoRampartsCrossCount}}/{{teamsOne.autoRampartsAppearCount}}<br>
+        Teleop: {{teamsOne.teleopRampartsAch}} -> {{teamsOne.teleopRampartsCrossCount}}/{{teamsOne.teleopRampartsAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoRampartsAch}} -> {{teamsTwo.autoRampartsCrossCount}}/{{teamsTwo.autoRampartsAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopRampartsAch}} -> {{teamsTwo.teleopRampartsCrossCount}}/{{teamsTwo.teleopRampartsAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoRampartsAch}} -> {{teamsThree.autoRampartsCrossCount}}/{{teamsThree.autoRampartsAppearCount}}<br>
+        Teleop: {{teamsThree.teleopRampartsAch}} -> {{teamsThree.teleopRampartsCrossCount}}/{{teamsThree.teleopRampartsAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Drawbridge</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoDrawbridgeAch}} -> {{teamsOne.autoDrawbridgeCrossCount}}/{{teamsOne.autoDrawbridgeAppearCount}}<br>
+        Teleop: {{teamsOne.teleopDrawbridgeAch}} -> {{teamsOne.teleopDrawbridgeCrossCount}}/{{teamsOne.teleopDrawbridgeAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoDrawbridgeAch}} -> {{teamsTwo.autoDrawbridgeCrossCount}}/{{teamsTwo.autoDrawbridgeAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopDrawbridgeAch}} -> {{teamsTwo.teleopDrawbridgeCrossCount}}/{{teamsTwo.teleopDrawbridgeAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoDrawbridgeAch}} -> {{teamsThree.autoDrawbridgeCrossCount}}/{{teamsThree.autoDrawbridgeAppearCount}}<br>
+        Teleop: {{teamsThree.teleopDrawbridgeAch}} -> {{teamsThree.teleopDrawbridgeCrossCount}}/{{teamsThree.teleopDrawbridgeAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Sally Port</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoSallyPortAch}} -> {{teamsOne.autoSallyPortCrossCount}}/{{teamsOne.autoSallyPortAppearCount}}<br>
+        Teleop: {{teamsOne.teleopSallyPortAch}} -> {{teamsOne.teleopSallyPortCrossCount}}/{{teamsOne.teleopSallyPortAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoSallyPortAch}} -> {{teamsTwo.autoSallyPortCrossCount}}/{{teamsTwo.autoSallyPortAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopSallyPortAch}} -> {{teamsTwo.teleopSallyPortCrossCount}}/{{teamsTwo.teleopSallyPortAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoSallyPortAch}} -> {{teamsThree.autoSallyPortCrossCount}}/{{teamsThree.autoSallyPortAppearCount}}<br>
+        Teleop: {{teamsThree.teleopSallyPortAch}} -> {{teamsThree.teleopSallyPortCrossCount}}/{{teamsThree.teleopSallyPortAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Rock Wall</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoRockWallAch}} -> {{teamsOne.autoRockWallCrossCount}}/{{teamsOne.autoRockWallAppearCount}}<br>
+        Teleop: {{teamsOne.teleopRockWallAch}} -> {{teamsOne.teleopRockWallCrossCount}}/{{teamsOne.teleopRockWallAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoRockWallAch}} -> {{teamsTwo.autoRockWallCrossCount}}/{{teamsTwo.autoRockWallAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopRockWallAch}} -> {{teamsTwo.teleopRockWallCrossCount}}/{{teamsTwo.teleopRockWallAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoRockWallAch}} -> {{teamsThree.autoRockWallCrossCount}}/{{teamsThree.autoRockWallAppearCount}}<br>
+        Teleop: {{teamsThree.teleopRockWallAch}} -> {{teamsThree.teleopRockWallCrossCount}}/{{teamsThree.teleopRockWallAppearCount}}
+      </div>
+    </div>
+    <div class="row" style="width:100%">
+      <div class="col padding" style="background-color: #FF9999">Rough Terrain</div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsOne.autoRoughTerrainAch}} -> {{teamsOne.autoRoughTerrainCrossCount}}/{{teamsOne.autoRoughTerrainAppearCount}}<br>
+        Teleop: {{teamsOne.teleopRoughTerrainAch}} -> {{teamsOne.teleopRoughTerrainCrossCount}}/{{teamsOne.teleopRoughTerrainAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsTwo.autoRoughTerrainAch}} -> {{teamsTwo.autoRoughTerrainCrossCount}}/{{teamsTwo.autoRoughTerrainAppearCount}}<br>
+        Teleop: {{teamsTwo.teleopRoughTerrainAch}} -> {{teamsTwo.teleopRoughTerrainCrossCount}}/{{teamsTwo.teleopRoughTerrainAppearCount}}
+      </div>
+      <div class="col padding" style="background-color: #FFFFFF">
+        Auto: {{teamsThree.autoRoughTerrainAch}} -> {{teamsThree.autoRoughTerrainCrossCount}}/{{teamsThree.autoRoughTerrainAppearCount}}<br>
+        Teleop: {{teamsThree.teleopRoughTerrainAch}} -> {{teamsThree.teleopRoughTerrainCrossCount}}/{{teamsThree.teleopRoughTerrainAppearCount}}
+      </div>
+    </div>
+
+
+  </ion-content>
+</ion-view>

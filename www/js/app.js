@@ -67,6 +67,13 @@ angular.module('starter', ['ionic','starter.controllers'])
         controller: 'TableCtrl'
       })
 
+    $stateProvider
+      .state('alliance', {
+        url: '/alliance',
+        templateUrl: 'templates/alliance.html',
+        controller: 'AllianceCtrl'
+      })
+
 
 
     // defaults URL/state to the splash screen (first screen)
