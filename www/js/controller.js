@@ -64,6 +64,33 @@ angular.module('starter.controllers', ['ionic'])
 
   }
 
+  $scope.inputString = function(stringInput) {
+
+    console.log ("Inputted String: " + stringInput);
+
+    $rootScope.pull = JSON.parse(stringInput);
+
+    console.log ("Pull: " + JSON.stringify($rootScope.pull));
+
+    for (i = 0; i < $rootScope.pull.length; i++) {
+
+      if ($rootScope.pull[i].teleop)
+      {
+        $rootScope.pull[i].teleop = JSON.parse($rootScope.pull[i].teleop);
+      }
+      if ($rootScope.pull[i].auto)
+      {
+        $rootScope.pull[i].auto = JSON.parse($rootScope.pull[i].auto);
+      }
+
+      $rootScope.pull[i].teleop.cycleTime /= 100;
+
+    }
+
+    $state.go('menu');
+
+  }
+
 }])
 
 .controller('MenuCtrl', ['$scope', '$state', '$rootScope', '$http', '$interval', function($scope, $state, $rootScope, $http, $interval) {

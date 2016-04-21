@@ -16,6 +16,31 @@
       {{pulling}}
     </div>
 
+    <br>
+    <br>
+
+    <div style="font-size: 30px; color: #FFFFFF">
+      Or...
+    </div>
+
+    <br>
+    <br>
+
+    <form ng-submit="inputString(stringInput)" name="InputString" style="background-color: #000000">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Insert Code..." ng-model="stringInput">
+        </label>
+        <button class="button button-small" ng-disabled="filterForm.$invalid">
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <button class="button button-royal button-block" ng-click="stringInput = ''">
+      Clear
+    </button>
+
 
   </ion-content>
 </ion-view>
